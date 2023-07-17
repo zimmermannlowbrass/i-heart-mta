@@ -7,7 +7,7 @@ from config import db, bcrypt
 
 
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -15,8 +15,11 @@ class User(db.Model):
     password = db.Column(db.String)
 
 
-class Station(db.Model):
+class Station(db.Model, SerializerMixin):
     __tablename__ = 'stations'
+    
+    serialize_rules = ('-subwaystops.station',)
+
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -26,8 +29,11 @@ class Station(db.Model):
 
     subwaystops = db.relationship('SubwayStop', backref='station')
                                   
-class SubwayStop(db.Model):
+class SubwayStop(db.Model, SerializerMixin):
     __tablename__ = 'subwaystops'
+
+    serialize_rules = ('-station.subwaystops',)
+
 
     id = db.Column(db.Integer, primary_key=True)
     route = db.Column(db.String)
