@@ -6,8 +6,10 @@ import './App.css';
 
 function App() {
 
+  const googleAPIkey = process.env.REACT_APP_API_KEY
+
   const { isLoaded } =  useLoadScript({
-    googleMapsApiKey: "AIzaSyBpY34NuBHO_NY3ex55Rp0AZQeMDVAyaQo",
+    googleMapsApiKey: googleAPIkey,
     libraries: ["places"]
   })
 
