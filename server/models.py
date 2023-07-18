@@ -14,26 +14,32 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String)
 
+    def __repr__(self):
+        return f'<User>{self.username}'
 
 class Station(db.Model, SerializerMixin):
     __tablename__ = 'stations'
     
     serialize_rules = ('-subwaystops.station',)
 
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     borough = db.Column(db.String)
+    routes = db.Column(db.String)
+    lat = db.Column(db.Integer)
+    lng = db.Column(db.Integer)
     uptown = db.Column(db.String)
     downtown = db.Column(db.String)
 
     subwaystops = db.relationship('SubwayStop', backref='station')
+
+    def __repr__(self):
+        return f'<Station>{self.name} in {self.borough}'
                                   
 class SubwayStop(db.Model, SerializerMixin):
     __tablename__ = 'subwaystops'
 
     serialize_rules = ('-station.subwaystops',)
-
 
     id = db.Column(db.Integer, primary_key=True)
     route = db.Column(db.String)
@@ -42,3 +48,6 @@ class SubwayStop(db.Model, SerializerMixin):
     color = db.Column(db.String)
 
     station_id = db.Column(db.Integer, db.ForeignKey('stations.id'))
+
+    def __repr__(self):
+        return f'<SubwayStop>{self.position} along the {self.route} at {self.stationinitials}'

@@ -59,14 +59,13 @@ function Map() {
     return(
         <div className="continer">
             <div className="controls">
-                <h1>Commute?</h1>
-                <Places 
+                {/* <Places 
                     position = "start"
                     setPosition={(position) => {
                         setStart(position)
                         mapRef.current.panTo(position)
                 }}
-                />
+                /> */}
                 <Places 
                     position = "end"
                     setPosition={(position) => {

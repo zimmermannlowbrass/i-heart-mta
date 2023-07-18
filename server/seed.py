@@ -25,8 +25,11 @@ if __name__ == '__main__':
             station = Station(
                 name=data[0],
                 borough=data[1],
-                uptown=data[2],
-                downtown=data[3]
+                routes=data[2],
+                lat=data[3],
+                lng=data[4],
+                uptown=data[5],
+                downtown=data[6]
             )
             stations.append(station)
 

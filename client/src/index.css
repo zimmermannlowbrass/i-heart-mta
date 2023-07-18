@@ -29,6 +29,8 @@ a {
   padding: 1rem;
   background: #14161a;
   color: #fff;
+  display: grid;
+  align-items: center;
 }
 
 .controls input {

@@ -2,6 +2,7 @@
 
 import pandas as pd
 
+
 STATIONS_FILE = "../Stations.csv"
 
 class Stations:
@@ -22,7 +23,7 @@ class Stations:
 
     list_of_stations = []
     for station in self.stations_df.values:
-      stationinfo = [station[5], station[6], station[11], station[12]]
+      stationinfo = [station[5], station[6], station[7], station[9], station[10], station[11], station[12]]
       list_of_stations.append(stationinfo)
     return list_of_stations
 
