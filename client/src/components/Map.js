@@ -4,8 +4,6 @@ import {
     GoogleMap,
     Marker,
     DirectionsRenderer,
-    Circle,
-    MarkerClusterer,
 } from "@react-google-maps/api"
 
 import Places from "./Places";
