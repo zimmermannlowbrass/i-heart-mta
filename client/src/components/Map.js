@@ -1,12 +1,13 @@
 import React from "react";
 import { useState, useMemo, useCallback, useRef } from "react";
+
 import {
     GoogleMap,
     Marker,
     DirectionsRenderer,
 } from "@react-google-maps/api"
 
-import Places from "./Places";
+import Controls from "./controls/Controls";
 import Directions from "./Directions";
 
 function Map() {
@@ -15,6 +16,8 @@ function Map() {
     const [start, setStart] = useState()
     const [end, setEnd] = useState()
     const [directions, setDirections] = useState()
+    
+
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656}), [])
     const options = useMemo(() => ({
@@ -45,33 +48,32 @@ function Map() {
         })
     }
 
-    function subwayfilter(route) {
-        for (const leg in route.routes[0].legs[0].steps) {
-            if (leg.travel_mode === 'TRANSIT') {
-                console.log('TRANSIT!')
-            }
-        }
-        return route
-    }
+    // function subwayfilter(route) {
+    //     for (const leg in route.routes[0].legs[0].steps) {
+    //         if (leg.travel_mode === 'TRANSIT') {
+    //             console.log('TRANSIT!')
+    //         }
+    //     }
+    //     return route
+    // }
 
-    console.log(directions)
+
+    function handleSetStart(start) {
+        setStart(start)
+    }
+    function handleSetEnd(end) {
+        setEnd(end)
+    }
 
     return(
         <div className="continer">
             <div className="controls">
-                {/* <Places 
-                    position = "start"
-                    setPosition={(position) => {
-                        setStart(position)
-                        mapRef.current.panTo(position)
-                }}
-                /> */}
-                <Places 
-                    position = "end"
-                    setPosition={(position) => {
-                        setEnd(position)
-                        mapRef.current.panTo(position)
-                }}
+                <Controls 
+                    start = {start}
+                    onSetStart = {handleSetStart}
+                    end = {end}
+                    onSetEnd = {handleSetEnd}
+                    mapRef = {mapRef}
                 />
                 {(start && end) ? 
                 <button onClick={fetchDirections}>
@@ -83,7 +85,6 @@ function Map() {
                 </div>
             </div>
             <div className="map">
-                
                 <GoogleMap 
                 zoom={14} 
                 center={center} 
