@@ -20,26 +20,29 @@ function Controls({ start, onSetStart, end, onSetEnd, mapRef }) {
         setRoutes(routes)
     }
 
+
     return (
         <div>
-                <StartStation 
-                    routes = {routes}
-                    onSetRoutes = {handleSetRoutes}
-                    stations = {stations}
-                    setPosition={(position) => {
-                        onSetStart(position)
-                        mapRef.current.panTo(position)
-                }}
-                />
-                {routes.length >=1 && <Dropdown options={routes} placeholder="which train..."onChange={e => setRoutes(e.value)}>Which train?</Dropdown>}
-                {routes.length === 1 && <EndStation 
-                    route = {routes}
-                    setPosition={(position) => {
-                        onSetEnd(position)
-                        mapRef.current.panTo(position)
-                }}
-                />}
-            </div>
+            <StartStation 
+                routes = {routes}
+                onSetRoutes = {handleSetRoutes}
+                stations = {stations}
+                setPosition={(position) => {
+                    onSetStart(position)
+                    mapRef.current.panTo(position)}}
+            />
+            {routes.length >=1 && <Dropdown options={routes} placeholder="which train..."onChange={e => setRoutes(e.value)}>Which train?</Dropdown>}
+
+            {routes.length === 1 && 
+            <EndStation 
+                route = {routes}
+                start = {start}
+                setPosition={(station) => {
+                    onSetEnd(station)
+                    mapRef.current.panTo(station)}
+                }
+            />}
+        </div>
     )
 }
 

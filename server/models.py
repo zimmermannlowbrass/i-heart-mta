@@ -31,10 +31,7 @@ class Station(db.Model, SerializerMixin):
     uptown = db.Column(db.String)
     downtown = db.Column(db.String)
 
-    subwaystops = db.relationship('SubwayStop', backref='station')
-
-    def __repr__(self):
-        return f'<Station>{self.name} in {self.borough}'
+    subwaystops = db.relationship('SubwayStop', back_populates='station')
                                   
 class SubwayStop(db.Model, SerializerMixin):
     __tablename__ = 'subwaystops'
@@ -44,10 +41,11 @@ class SubwayStop(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     route = db.Column(db.String)
     position = db.Column(db.Integer)
-    stationinitials = db.Column(db.String)
+    stationname = db.Column(db.String)
     color = db.Column(db.String)
 
     station_id = db.Column(db.Integer, db.ForeignKey('stations.id'))
+    station = db.relationship('Station', back_populates='subwaystops')
 
     def __repr__(self):
         return f'<SubwayStop>{self.position} along the {self.route} at {self.stationinitials}'

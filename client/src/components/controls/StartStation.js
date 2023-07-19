@@ -19,16 +19,16 @@ function StartStation({ routes, onSetRoutes, stations, setPosition }) {
             }
         }
         onSetRoutes(routes)
-        setPosition({ lat: station.lat, lng: station.lng})
+        setPosition(station)
     } 
     
     const stations_in_borough = stations.filter(station => station.borough === borough)
-    const station_choices = stations_in_borough.filter(station_in_borough => station_in_borough.name.includes(station))
+    const station_choices = stations_in_borough.filter(station_in_borough => station_in_borough.name.toUpperCase().includes(station.toUpperCase()))
 
     return (
         <div>
             {routes.length !== 0 ? <Dropdown options={routes} >Which train?</Dropdown> : null}
-            <Dropdown className="combobox-input" placeholder="Pick a borough" options={['M', 'Br', 'Bx', 'Q', 'SI']} value={borough} onChange={e => setBorough(e.value)}/>
+            <Dropdown className="combobox-input" placeholder="Pick a borough" options={['M', 'Bk', 'Bx', 'Q', 'SI']} value={borough} onChange={e => setBorough(e.value)}/>
             <br />
             {borough &&
                 <Combobox onSelect={e => handleSelect(e)}>

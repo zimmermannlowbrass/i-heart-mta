@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
         user = User(username='Bob', password='password')
 
-        db.session.add(user)
+        # db.session.add(user)
 
         stationdata = Stations().get_stations()
         stations = []
@@ -34,8 +34,8 @@ if __name__ == '__main__':
             stations.append(station)
 
         db.session.add_all(stations)
-        print('\n\n**\All stations have been added!\n**\n\n')
 
+        print('\n\n**\All stations have been added!\n**\n\n')
         subways = Stations().get_subwaylines()
         subwaystops = []
         for subway in subways:
@@ -44,13 +44,14 @@ if __name__ == '__main__':
             count = 1
             for data in scrape:
                 subwaystop = SubwayStop(
-                    stationinitials=data,
+                    stationname=data,
                     route=subway,
                     position=count
                 )
-                for station in stations:
-                    if station.name[:3] == data:
-                        subwaystop.station = station
+                for x in range(len(stations)):
+                    if stations[x].name == data:
+                        if subway in stations[x].routes:
+                            subwaystop.station = stations[x]
                 subwaystops.append(subwaystop)
                 count += 1
 

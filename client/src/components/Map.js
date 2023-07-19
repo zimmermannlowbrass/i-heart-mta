@@ -11,13 +11,10 @@ import Controls from "./controls/Controls";
 import Directions from "./Directions";
 
 function Map() {
-
-
     const [start, setStart] = useState()
     const [end, setEnd] = useState()
     const [directions, setDirections] = useState()
     
-
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656}), [])
     const options = useMemo(() => ({
@@ -33,7 +30,7 @@ function Map() {
 
         const service = new window.google.maps.DirectionsService()
         service.route({
-            origin: start,
+            origin: { lat: start.lat, lng: start.lng},
             destination: end,
             travelMode: window.google.maps.TravelMode.TRANSIT,
             transitOptions: {
@@ -102,7 +99,7 @@ function Map() {
                     />)
                     }
 
-                    {start && (<Marker position={start}/>)}
+                    {start && (<Marker position={{ lat: start.lat, lng: start.lng}}/>)}
                     {end && (<Marker position={end}/>)}
                 </GoogleMap>
             </div>
