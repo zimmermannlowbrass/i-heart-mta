@@ -23,8 +23,9 @@ class Stations:
 
     list_of_stations = []
     for station in self.stations_df.values:
-      boroughs = station[7].replace(' ', '')
-      stationinfo = [station[5], station[6], boroughs, station[9], station[10], station[11], station[12]]
+      name = station[5].replace('-', ' ')
+      routes = station[7].replace(' ', '')
+      stationinfo = [name, station[6], routes, station[9], station[10], station[11], station[12]]
       list_of_stations.append(stationinfo)
     return list_of_stations
 

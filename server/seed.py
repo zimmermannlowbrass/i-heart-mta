@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
         stationdata = Stations().get_stations()
         stations = []
-        print('\n\n**\nCurrently grabbing all stations\n**\n\n')
+        print('**\nCurrently grabbing all stations\n**')
         for data in stationdata:
             station = Station(
                 name=data[0],
@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
         db.session.add_all(stations)
 
-        print('\n\n**\All stations have been added!\n**\n\n')
+        print('**\nAll stations have been added!\n**')
         subways = Stations().get_subwaylines()
         subwaystops = []
         for subway in subways:

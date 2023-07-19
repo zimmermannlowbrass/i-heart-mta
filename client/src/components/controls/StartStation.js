@@ -14,9 +14,7 @@ function StartStation({ routes, onSetRoutes, stations, setPosition }) {
     function handleSelect(station) {
         const routes = []
         for (let route of station.routes) {
-            if (route !== ' ') {
-                routes.push(route)
-            }
+            routes.push(route)
         }
         onSetRoutes(routes)
         setPosition(station)

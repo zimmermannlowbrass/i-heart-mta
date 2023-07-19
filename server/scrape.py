@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 
 from stations import Stations
+from scrape_helper import fix_spelling_errors_from_scrape
 
 def scraper(subway):
     headers = {'user-agent': 'my-app/0.0.1'}
@@ -17,15 +18,16 @@ def scraper(subway):
     for course in courses:
         content = str(course.contents[0])
         content = content[3: -4]
-        if content != 'Subway Station':
+        if 'Subway' not in content:
+            content = fix_spelling_errors_from_scrape(content)
             route.append(content)
         # content = content[3: -4]
     return route
 
-scrape = scraper(1)
-# print(scrape)
+scrape = scraper('S')
 
 stations = Stations().get_stations()
 for station in stations:
-    if '1' in station[2]:
-        print(station)
+    if 'S' in station[2]:  
+        if station[0] not in scrape:
+            print(station)
