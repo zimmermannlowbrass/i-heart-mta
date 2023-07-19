@@ -30,29 +30,22 @@ function Map() {
 
         const service = new window.google.maps.DirectionsService()
         service.route({
-            origin: { lat: start.lat, lng: start.lng},
-            destination: end,
+            origin: {lat: start.lat, lng: start.lng},
+            destination: {lat: end.lat, lng: end.lng},
+            waypoints: [],
             travelMode: window.google.maps.TravelMode.TRANSIT,
             transitOptions: {
                 routingPreference: "FEWER_TRANSFERS",
-                modes: ['TRAIN']
+                modes: ['SUBWAY']
             }
         }, 
         (result, status) => {
             if (status === 'OK' && result) {
+                console.log(result)
                 setDirections(result)
             }
         })
     }
-
-    // function subwayfilter(route) {
-    //     for (const leg in route.routes[0].legs[0].steps) {
-    //         if (leg.travel_mode === 'TRANSIT') {
-    //             console.log('TRANSIT!')
-    //         }
-    //     }
-    //     return route
-    // }
 
 
     function handleSetStart(start) {
@@ -83,24 +76,28 @@ function Map() {
             </div>
             <div className="map">
                 <GoogleMap 
-                zoom={14} 
+                zoom={14}
+                tilt={20}
+                heading={30}
                 center={center} 
                 mapContainerClassName="map-container"
                 options={options}
                 onLoad={onLoad}
                 >
                     {directions && 
-                    (<DirectionsRenderer directions={directions} options={{
-                        polylineOptions: {
-                            strokeColor:'red'
-                        },
-                        suppressMarkers: true
-                    }}
+                    (<DirectionsRenderer 
+                        directions={directions} 
+                        options={{
+                            polylineOptions: {
+                                strokeColor:'red'
+                            },
+                            suppressMarkers: true
+                        }}
                     />)
                     }
 
-                    {start && (<Marker position={{ lat: start.lat, lng: start.lng}}/>)}
-                    {end && (<Marker position={end}/>)}
+                    {start && (<Marker position={{lat: start.lat, lng: start.lng}}/>)}
+                    {end && (<Marker position={{lat: end.lat, lng: end.lng}}/>)}
                 </GoogleMap>
             </div>
         </div>

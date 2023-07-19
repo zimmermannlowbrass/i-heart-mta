@@ -37,7 +37,7 @@ function EndStation({ route, start, setPosition}){
             {direction && 
             <Select
             options={options}
-            onChange={e => console.log(e.value)}
+            onChange={e => setPosition(e.value.station)}
             />}
         </div>
     )
