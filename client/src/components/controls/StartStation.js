@@ -11,7 +11,8 @@ function StartStation({ routes, onSetRoutes, stations, setPosition }) {
     const [borough, setBorough] = useState('')
 
 
-    function handleSelect(station) {
+    function handleSelect(stationName) {
+        const station = station_choices.filter(station => station.name === stationName)[0]
         const routes = []
         for (let route of station.routes) {
             routes.push(route)
@@ -38,10 +39,7 @@ function StartStation({ routes, onSetRoutes, stations, setPosition }) {
                     />
                     <ComboboxPopover>
                         <ComboboxList>
-                            {/* {status ==="OK" ? data.map(({ place_id, description }) => (
-                                <ComboboxOption key={place_id} value={description}/>
-                            )) : null} */}
-                            {station_choices.map(station => <ComboboxOption key={station.id} value={station}>{station.name} {station.routes}</ComboboxOption>)}
+                            {station_choices.map(station => <ComboboxOption key={station.id} value={station.name}>{station.name} {station.routes}</ComboboxOption>)}
                         </ComboboxList>
                     </ComboboxPopover>
                 </Combobox>}

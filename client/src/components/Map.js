@@ -89,7 +89,7 @@ function Map() {
                         directions={directions} 
                         options={{
                             polylineOptions: {
-                                strokeColor:'red'
+                                strokeColor: 'Red'
                             },
                             suppressMarkers: true
                         }}

@@ -28,12 +28,13 @@ function Controls({ start, onSetStart, end, onSetEnd, mapRef }) {
                 onSetRoutes = {handleSetRoutes}
                 stations = {stations}
                 setPosition={(position) => {
+                    console.log('Set!')
                     onSetStart(position)
                     mapRef.current.panTo(position)}}
             />
             {routes.length >=1 && <Dropdown options={routes} placeholder="which train..."onChange={e => setRoutes(e.value)}>Which train?</Dropdown>}
 
-            {routes.length === 1 && 
+            {typeof(routes) === 'string' && 
             <EndStation 
                 route = {routes}
                 start = {start}

@@ -22,3 +22,24 @@ def fix_spelling_errors_from_scrape(content):
     content = content.replace('Newtown', '')
     content = content.replace('57 7 Av', '57 St 7 Av')
     return content.strip()
+
+def color_of_subway_route(subway):
+    if subway in ['1','2','3']:
+        return 'Red'
+    elif subway in ['4','5','6']:
+        return 'Green'
+    elif subway == '7':
+        return 'Purple'
+    elif subway in ['A','C','E']:
+        return 'Blue'
+    elif subway in ['B','D','F','M']:
+        return 'Orange'
+    elif subway in ['N','Q','R','W']:
+        return 'Yellow'
+    elif subway in ['J','Z']:
+        return 'Brown'
+    elif subway in ['L','S']:
+        return 'Grey'
+    elif subway == 'G':
+        return 'Lime'
+    

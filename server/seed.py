@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-
-
 from app import app
 from models import db, User, SubwayStop, Station
 
 from scrape import scraper
+from scrape_helper import color_of_subway_route
 from stations import Stations
+
+
 
 if __name__ == '__main__':
     with app.app_context():
@@ -39,6 +40,7 @@ if __name__ == '__main__':
         subways = Stations().get_subwaylines()
         subwaystops = []
         for subway in subways:
+            color = color_of_subway_route(subway)
             print(f'Currently gathering data for the {subway} train.')
             scrape = scraper(subway)
             count = 1
@@ -46,7 +48,8 @@ if __name__ == '__main__':
                 subwaystop = SubwayStop(
                     stationname=data,
                     route=subway,
-                    position=count
+                    position=count,
+                    color=color
                 )
                 for x in range(len(stations)):
                     if stations[x].name == data:
