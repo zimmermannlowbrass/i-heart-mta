@@ -8,12 +8,12 @@ import {
 } from "@react-google-maps/api"
 
 import Controls from "./controls/Controls";
-import Directions from "./Directions";
 
 function Map() {
     const [start, setStart] = useState()
     const [end, setEnd] = useState()
     const [directions, setDirections] = useState()
+    const [color, setColor] = useState('Black')
     
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656}), [])
@@ -54,6 +54,9 @@ function Map() {
     function handleSetEnd(end) {
         setEnd(end)
     }
+    function handleSetColor(color) {
+        setColor(color)
+    }
 
     return(
         <div className="continer">
@@ -64,15 +67,16 @@ function Map() {
                     end = {end}
                     onSetEnd = {handleSetEnd}
                     mapRef = {mapRef}
+                    onSetColor={handleSetColor}
                 />
                 {(start && end) ? 
                 <button onClick={fetchDirections}>
                     Directions
                 </button>
                 : null}
-                <div>
+                {/* <div>
                     {directions && <Directions directions={directions.routes[0].legs[0]}/>}
-                </div>
+                </div> */}
             </div>
             <div className="map">
                 <GoogleMap 
@@ -89,7 +93,7 @@ function Map() {
                         directions={directions} 
                         options={{
                             polylineOptions: {
-                                strokeColor: 'Red'
+                                strokeColor: color
                             },
                             suppressMarkers: true
                         }}

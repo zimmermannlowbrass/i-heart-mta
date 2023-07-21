@@ -1,43 +1,54 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import Dropdown from 'react-dropdown';
 
 import StartStation from "./StartStation";
 import EndStation from "./EndStation";
+import Boroughs from "./Boroughs";
+import Routes from "./Routes";
 
-function Controls({ start, onSetStart, end, onSetEnd, mapRef }) {
+function Controls({ start, onSetStart, end, onSetEnd, mapRef, onSetColor}) {
 
-    const [routes, setRoutes] = useState([])
-    const [stations, setStations] = useState([])
-
-    useEffect(() => {
-        fetch("/stations")
-        .then(r => r.json())
-        .then(setStations)
-    }, [])
-
-    function handleSetRoutes(routes) {
-        setRoutes(routes)
+    const [borough, setBorough] = useState('')
+    const [route, setRoute] = useState('')
+ 
+    function handleSetRoute(route) {
+        setRoute(route)
     }
 
+    function handleSetBorough(newBorough) {
+        setBorough(newBorough)
+    }
+
+    function handleReset() {
+        setBorough('')
+        setRoute('')
+        onSetStart('')
+        onSetEnd('')
+    }
 
     return (
         <div>
-            <StartStation 
-                routes = {routes}
-                onSetRoutes = {handleSetRoutes}
-                stations = {stations}
+            <button onClick={handleReset}>Reset data</button>
+            <Boroughs
+            borough = {borough} 
+            onSetBorough = {handleSetBorough}
+            />
+            {borough && 
+            <StartStation
+                start={start}
+                onSetStart={onSetStart}
+                borough = {borough}
                 setPosition={(position) => {
-                    console.log('Set!')
-                    onSetStart(position)
                     mapRef.current.panTo(position)}}
             />
-            {routes.length >=1 && <Dropdown options={routes} placeholder="which train..."onChange={e => setRoutes(e.value)}>Which train?</Dropdown>}
+            }
+            {(borough && start) && <Routes start={start} route ={route} onSetRoutes={handleSetRoute}/>}
 
-            {typeof(routes) === 'string' && 
+            {(borough && start && route) && 
             <EndStation 
-                route = {routes}
+                route = {route}
                 start = {start}
+                onSetColor = {onSetColor}
                 setPosition={(station) => {
                     onSetEnd(station)
                     mapRef.current.panTo(station)}

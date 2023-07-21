@@ -1,48 +1,57 @@
 import React from "react";
-import { useState } from "react";
-
-import Dropdown from 'react-dropdown';
+import { useState, useEffect } from "react";
 
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 
-function StartStation({ routes, onSetRoutes, stations, setPosition }) {
+function StartStation({start, onSetStart, borough, setPosition }) {
 
+    const [stations, setStations] = useState([])
     const [station, setStation] = useState('')
-    const [borough, setBorough] = useState('')
+
+    useEffect(() => {
+        fetch("/stations")
+        .then(r => r.json())
+        .then(setStations)
+    }, [])
 
 
     function handleSelect(stationName) {
-        const station = station_choices.filter(station => station.name === stationName)[0]
-        const routes = []
-        for (let route of station.routes) {
-            routes.push(route)
-        }
-        onSetRoutes(routes)
+        const x = stationName.indexOf('#')
+        const station_id = parseInt(stationName.slice(x + 1))
+        const station = stations.filter(station => station.id === station_id)[0]
+        onSetStart(station)
         setPosition(station)
+        setStation(station.name)
     } 
     
     const stations_in_borough = stations.filter(station => station.borough === borough)
     const station_choices = stations_in_borough.filter(station_in_borough => station_in_borough.name.toUpperCase().includes(station.toUpperCase()))
+    const station_choices_mapped = station_choices.map(station => {
+        const value = station.name + ' ' + station.routes + ' #' + station.id
+        return (
+            <ComboboxOption key={station.id} value={value}>{station.name}-{station.routes}</ComboboxOption>
+        )
+    })
+
 
     return (
         <div>
-            {routes.length !== 0 ? <Dropdown options={routes} >Which train?</Dropdown> : null}
-            <Dropdown className="combobox-input" placeholder="Pick a borough" options={['M', 'Bk', 'Bx', 'Q', 'SI']} value={borough} onChange={e => setBorough(e.value)}/>
             <br />
-            {borough &&
-                <Combobox onSelect={e => handleSelect(e)}>
-                    <ComboboxInput 
-                    value={station} 
-                    onChange ={e => setStation(e.target.value)}
-                    className="combobox-input"
-                    placeholder="start"
-                    />
-                    <ComboboxPopover>
-                        <ComboboxList>
-                            {station_choices.map(station => <ComboboxOption key={station.id} value={station.name}>{station.name} {station.routes}</ComboboxOption>)}
-                        </ComboboxList>
-                    </ComboboxPopover>
-                </Combobox>}
+            <Combobox onSelect={(e) => handleSelect(e)}>
+                <ComboboxInput 
+                value={station}
+                readOnly = {start && true}
+                onChange ={e => setStation(e.target.value)}
+                className="combobox-input"
+                placeholder="start"
+                />
+                {!start && <ComboboxPopover>
+                    <ComboboxList>
+                        {station_choices_mapped}
+                    </ComboboxList>
+                </ComboboxPopover>}
+            </Combobox>
+            < br />
         </div>
     )
 

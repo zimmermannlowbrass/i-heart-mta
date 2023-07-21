@@ -5,7 +5,7 @@ import Select from 'react-select';
 
 
 
-function EndStation({ route, start, setPosition}){
+function EndStation({ route, start, onSetColor, setPosition}){
 
     const [subwaystops, setSubwayStops] = useState([])
     const [direction, setDirection] = useState()
@@ -30,14 +30,18 @@ function EndStation({ route, start, setPosition}){
         return {label: stop.stationname, value: stop}
     })
 
-    console.log(options)
+    function handleSetEndStation(e) {
+        setPosition(e.value.station)
+        onSetColor(e.value.color)
+    }
+
     return (
         <div>
             <Dropdown placeholder="Pick a direction" options={[{label: start.uptown, value: "uptown"}, {label: start.downtown, value: "downtown"}]} onChange={e => setDirection(e.value)}/>
             {direction && 
             <Select
             options={options}
-            onChange={e => setPosition(e.value.station)}
+            onChange={e => handleSetEndStation(e)}
             />}
         </div>
     )
