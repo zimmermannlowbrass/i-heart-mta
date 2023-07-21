@@ -14,11 +14,13 @@ function Map() {
     const [end, setEnd] = useState()
     const [directions, setDirections] = useState()
     const [color, setColor] = useState('Black')
+    const [borough, setBorough] = useState('')
+    const [route, setRoute] = useState('')
     
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656}), [])
     const options = useMemo(() => ({
-        mapId: "7cb36be43290dc46",
+        mapId: "343a9e311a65c41f",
         disableDefaultUI: true,
         clickableIcons: false
     }), [])
@@ -43,31 +45,33 @@ function Map() {
             if (status === 'OK' && result) {
                 console.log(result)
                 setDirections(result)
-            }
+                handleReset()
+            } 
         })
     }
 
-
-    function handleSetStart(start) {
-        setStart(start)
-    }
-    function handleSetEnd(end) {
-        setEnd(end)
-    }
-    function handleSetColor(color) {
-        setColor(color)
+    function handleReset() {
+        setBorough('')
+        setRoute('')
+        setStart('')
+        setEnd('')
     }
 
     return(
         <div className="continer">
             <div className="controls">
+                <button onClick={handleReset}>Reset data</button>
                 <Controls 
                     start = {start}
-                    onSetStart = {handleSetStart}
+                    onSetStart = {setStart}
                     end = {end}
-                    onSetEnd = {handleSetEnd}
+                    onSetEnd = {setEnd}
                     mapRef = {mapRef}
-                    onSetColor={handleSetColor}
+                    onSetColor={setColor}
+                    borough={borough}
+                    onSetBorough={setBorough}
+                    route={route}
+                    onSetRoute={setRoute}
                 />
                 {(start && end) ? 
                 <button onClick={fetchDirections}>

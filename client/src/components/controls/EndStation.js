@@ -17,7 +17,7 @@ function EndStation({ route, start, onSetColor, setPosition}){
     }, [])
 
     const subwaystops_in_route = subwaystops.filter(subwaystop => subwaystop.route === route)
-    const currentstop = subwaystops_in_route.filter(stop => stop.stationname === start.name)[0]
+    const currentstop = subwaystops_in_route.filter(stop => stop.station.id === start.id)[0]
     const possible_subwaystops = subwaystops_in_route.filter(subwaystop => {
         if (direction === 'uptown') {
             return subwaystop.position < currentstop.position
@@ -37,12 +37,17 @@ function EndStation({ route, start, onSetColor, setPosition}){
 
     return (
         <div>
-            <Dropdown placeholder="Pick a direction" options={[{label: start.uptown, value: "uptown"}, {label: start.downtown, value: "downtown"}]} onChange={e => setDirection(e.value)}/>
-            {direction && 
-            <Select
-            options={options}
-            onChange={e => handleSetEndStation(e)}
-            />}
+            <Dropdown 
+                placeholder="Pick a direction" 
+                options={[{label: start.uptown, value: "uptown"}, {label: start.downtown, value: "downtown"}]} 
+                onChange={e => setDirection(e.value)}
+            />
+            {direction && <Select
+                options={options}
+                onChange={handleSetEndStation}
+                placeholder="Pick an end Destination"
+                />
+            }
         </div>
     )
 }
