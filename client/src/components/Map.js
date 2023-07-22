@@ -10,15 +10,17 @@ import {
 import Controls from "./controls/Controls";
 
 function Map() {
+
+    const [borough, setBorough] = useState('')
     const [start, setStart] = useState()
+    const [route, setRoute] = useState('')
+    const [color, setColor] = useState('')
     const [end, setEnd] = useState()
     const [directions, setDirections] = useState()
-    const [color, setColor] = useState('Black')
-    const [borough, setBorough] = useState('')
-    const [route, setRoute] = useState('')
+    const [allDirections, setAllDirections] = useState([])
     
     const mapRef = useRef()
-    const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656}), [])
+    const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656 }), [])
     const options = useMemo(() => ({
         mapId: "343a9e311a65c41f",
         disableDefaultUI: true,
@@ -26,7 +28,33 @@ function Map() {
     }), [])
 
 
-    const onLoad = useCallback(map => (mapRef.current = map), [])
+    const onLoad = useCallback((map) => mapRef.current = map, [])
+
+    const service = new window.google.maps.DirectionsService()
+    useMemo(() => {
+        service.route({
+            origin: {lat: 40.76266, lng: -73.967258},
+            destination: {lat: 
+                40.759901, lng: -73.984139},
+            waypoints: [],
+            travelMode: window.google.maps.TravelMode.TRANSIT,
+            transitOptions: {
+                routingPreference: "FEWER_TRANSFERS",
+                modes: ['SUBWAY']
+            }
+        }, 
+        (result, status) => {
+            if (status === 'OK' && result) {
+                setDirections(result)
+                handleReset()
+            } 
+        })
+    }, [])
+
+
+
+
+
     const fetchDirections = () => {
         console.log(start, end)
 
@@ -43,12 +71,15 @@ function Map() {
         }, 
         (result, status) => {
             if (status === 'OK' && result) {
-                console.log(result)
                 setDirections(result)
+                setAllDirections([...allDirections, result])
                 handleReset()
             } 
         })
     }
+
+
+
 
     function handleReset() {
         setBorough('')
@@ -78,22 +109,22 @@ function Map() {
                     Directions
                 </button>
                 : null}
-                {/* <div>
-                    {directions && <Directions directions={directions.routes[0].legs[0]}/>}
-                </div> */}
+
             </div>
             <div className="map">
                 <GoogleMap 
-                zoom={14}
-                tilt={20}
+                zoom={13}
+                tilt={60}
                 heading={30}
                 center={center} 
                 mapContainerClassName="map-container"
                 options={options}
                 onLoad={onLoad}
+                polylineOptions={"cakwFrorbMv@eEBSDQFODQHOFOHMJKHMJKLKJILINGNGPIPIPKLMLOJOJQHSFUFUFWBYBY@]@]PuM"}
                 >
                     {directions && 
-                    (<DirectionsRenderer 
+                    (
+                    <DirectionsRenderer 
                         directions={directions} 
                         options={{
                             polylineOptions: {
@@ -101,9 +132,7 @@ function Map() {
                             },
                             suppressMarkers: true
                         }}
-                    />)
-                    }
-
+                    />)}
                     {start && (<Marker position={{lat: start.lat, lng: start.lng}}/>)}
                     {end && (<Marker position={{lat: end.lat, lng: end.lng}}/>)}
                 </GoogleMap>
