@@ -16,6 +16,18 @@ class User(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<User>{self.username}'
+    
+
+class Trip(db.Model, SerializerMixin):
+    __tablename__ = 'trips'
+
+    id = db.Column(db.Integer, primary_key=True)
+    start_lat = db.Column(db.Float)
+    start_lng = db.Column(db.Float)
+    end_lat = db.Column(db.Float)
+    end_lng = db.Column(db.Float)
+
+
 
 class Station(db.Model, SerializerMixin):
     __tablename__ = 'stations'

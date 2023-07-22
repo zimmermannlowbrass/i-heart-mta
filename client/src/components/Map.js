@@ -30,26 +30,26 @@ function Map() {
 
     const onLoad = useCallback((map) => mapRef.current = map, [])
 
-    const service = new window.google.maps.DirectionsService()
-    useMemo(() => {
-        service.route({
-            origin: {lat: 40.76266, lng: -73.967258},
-            destination: {lat: 
-                40.759901, lng: -73.984139},
-            waypoints: [],
-            travelMode: window.google.maps.TravelMode.TRANSIT,
-            transitOptions: {
-                routingPreference: "FEWER_TRANSFERS",
-                modes: ['SUBWAY']
-            }
-        }, 
-        (result, status) => {
-            if (status === 'OK' && result) {
-                setDirections(result)
-                handleReset()
-            } 
-        })
-    }, [])
+    // const service = new window.google.maps.DirectionsService()
+    // useMemo(() => {
+    //     service.route({
+    //         origin: {lat: 40.76266, lng: -73.967258},
+    //         destination: {lat: 
+    //             40.759901, lng: -73.984139},
+    //         waypoints: [],
+    //         travelMode: window.google.maps.TravelMode.TRANSIT,
+    //         transitOptions: {
+    //             routingPreference: "FEWER_TRANSFERS",
+    //             modes: ['SUBWAY']
+    //         }
+    //     }, 
+    //     (result, status) => {
+    //         if (status === 'OK' && result) {
+    //             setDirections(result)
+    //             handleReset()
+    //         } 
+    //     })
+    // }, [])
 
 
 
@@ -57,6 +57,20 @@ function Map() {
 
     const fetchDirections = () => {
         console.log(start, end)
+        // fetch("/trips",{
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         start_lat: start.lat,
+        //         start_lng: start.lng,
+        //         end_lat: end.lat,
+        //         end_lng: end.lng
+        //     })
+        // }) 
+        // .then( r => r.json())
+        // .then(data => console.log(data))
 
         const service = new window.google.maps.DirectionsService()
         service.route({
