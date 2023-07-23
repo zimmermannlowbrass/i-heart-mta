@@ -17,6 +17,9 @@ function App() {
   return (
     <div >
       <Map />
+      <div id="map">
+        
+      </div>
     </div>
   );
 }

@@ -27,6 +27,8 @@ class Trip(db.Model, SerializerMixin):
     end_lat = db.Column(db.Float)
     end_lng = db.Column(db.Float)
 
+    start_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
+    end_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
 
 
 class Station(db.Model, SerializerMixin):

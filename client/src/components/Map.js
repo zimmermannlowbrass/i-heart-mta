@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 
 import {
     GoogleMap,
@@ -12,12 +12,15 @@ import Controls from "./controls/Controls";
 function Map() {
 
     const [borough, setBorough] = useState('')
-    const [start, setStart] = useState()
+    const [start, setStart] = useState([])
     const [route, setRoute] = useState('')
     const [color, setColor] = useState('')
-    const [end, setEnd] = useState()
+    const [end, setEnd] = useState([])
     const [directions, setDirections] = useState()
     const [allDirections, setAllDirections] = useState([])
+
+    const [trips, setTrips] = useState([])
+    const [activate, setActivate] = useState(false)
     
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656 }), [])
@@ -28,31 +31,43 @@ function Map() {
     }), [])
 
 
-    const onLoad = useCallback((map) => mapRef.current = map, [])
-
-    // const service = new window.google.maps.DirectionsService()
-    // useMemo(() => {
-    //     service.route({
-    //         origin: {lat: 40.76266, lng: -73.967258},
-    //         destination: {lat: 
-    //             40.759901, lng: -73.984139},
-    //         waypoints: [],
-    //         travelMode: window.google.maps.TravelMode.TRANSIT,
-    //         transitOptions: {
-    //             routingPreference: "FEWER_TRANSFERS",
-    //             modes: ['SUBWAY']
-    //         }
-    //     }, 
-    //     (result, status) => {
-    //         if (status === 'OK' && result) {
-    //             setDirections(result)
-    //             handleReset()
-    //         } 
-    //     })
-    // }, [])
+    const onLoad = useCallback((map) => {mapRef.current = map}, [])
 
 
+    useEffect(() => {
+        fetch("/trips")
+        .then(r => r.json())
+        .then(setTrips)
+    }, [])
 
+    let test
+
+    const handleTrips = useMemo(() => {
+        for (let i = 0; trips.length > i; i ++) {
+            console.log(trips[i])
+            setStart(start => [...start, {lat: trips[i].start_lat, lng: trips[i].start_lng}])
+            setStart(end => [...end, {lat: trips[i].end_lat, lng: trips[i].end_lng}])
+            const service = new window.google.maps.DirectionsService()
+            service.route({
+                origin: {lat: trips[i].start_lat, lng: trips[i].start_lng},
+                destination: {lat: trips[i].end_lat, lng: trips[i].end_lng},
+                waypoints: [],
+                travelMode: window.google.maps.TravelMode.TRANSIT,
+                transitOptions: {
+                    routingPreference: "FEWER_TRANSFERS",
+                    modes: ['SUBWAY']
+                }
+            }, 
+            (result, status) => {
+                if (status === 'OK' && result) {
+                    console.log('HELPME')
+                    // setDirections(result)
+                    setAllDirections(allDirections => [...allDirections, result])
+                    // handleReset()
+                } 
+            })
+        }
+    }, [activate])
 
 
     const fetchDirections = () => {
@@ -71,7 +86,6 @@ function Map() {
         // }) 
         // .then( r => r.json())
         // .then(data => console.log(data))
-
         const service = new window.google.maps.DirectionsService()
         service.route({
             origin: {lat: start.lat, lng: start.lng},
@@ -85,13 +99,26 @@ function Map() {
         }, 
         (result, status) => {
             if (status === 'OK' && result) {
-                setDirections(result)
+                console.log('HELPME')
+                // setDirections(result)
                 setAllDirections([...allDirections, result])
-                handleReset()
+                // handleReset()
             } 
         })
     }
 
+    const start_markers = start.map(start => {
+        return (
+            <Marker position={{lat: start.lat, lng: start.lng}}/>
+        )
+    })
+    const end_markers = end.map(end => {
+        return (
+            <Marker position={{lat:end.lat, lng: end.lng}} />
+        )
+    })
+
+    console.log(allDirections)
 
 
 
@@ -100,13 +127,24 @@ function Map() {
         setRoute('')
         setStart('')
         setEnd('')
-    }
+    } 
+
+    const directions_rendered = allDirections.map(direction => {
+        return (
+            <div>
+                <DirectionsRenderer directions={direction} />
+            </div>
+        )
+    })
+
+
 
     return(
         <div className="continer">
             <div className="controls">
                 <button onClick={handleReset}>Reset data</button>
-                <Controls 
+                <button onClick={() => setActivate(true)}>Click me</button>
+                {!activate && <Controls 
                     start = {start}
                     onSetStart = {setStart}
                     end = {end}
@@ -117,7 +155,7 @@ function Map() {
                     onSetBorough={setBorough}
                     route={route}
                     onSetRoute={setRoute}
-                />
+                />}
                 {(start && end) ? 
                 <button onClick={fetchDirections}>
                     Directions
@@ -125,7 +163,7 @@ function Map() {
                 : null}
 
             </div>
-            <div className="map">
+            <div className="map" id="map">
                 <GoogleMap 
                 zoom={13}
                 tilt={60}
@@ -134,9 +172,11 @@ function Map() {
                 mapContainerClassName="map-container"
                 options={options}
                 onLoad={onLoad}
-                polylineOptions={"cakwFrorbMv@eEBSDQFODQHOFOHMJKHMJKLKJILINGNGPIPIPKLMLOJOJQHSFUFUFWBYBY@]@]PuM"}
                 >
-                    {directions && 
+                    {start_markers}
+                    {end_markers}
+                    {directions_rendered}
+                    {/* {directions && 
                     (
                     <DirectionsRenderer 
                         directions={directions} 
@@ -146,9 +186,9 @@ function Map() {
                             },
                             suppressMarkers: true
                         }}
-                    />)}
-                    {start && (<Marker position={{lat: start.lat, lng: start.lng}}/>)}
-                    {end && (<Marker position={{lat: end.lat, lng: end.lng}}/>)}
+                    />)} */}
+                    {/* {start && (<Marker position={{lat: start.lat, lng: start.lng}}/>)}
+                    {end && (<Marker position={{lat: end.lat, lng: end.lng}}/>)} */}
                 </GoogleMap>
             </div>
         </div>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from app import app
-from models import db, User, SubwayStop, Station
+from models import db, User, SubwayStop, Station, Trip
 
 from scrape import scraper
 from scrape_helper import color_of_subway_route
@@ -14,6 +14,8 @@ if __name__ == '__main__':
         User.query.delete()
         SubwayStop.query.delete()
         Station.query.delete()
+        Trip.query.delete()
+
 
         user = User(username='Bob', password='password')
 

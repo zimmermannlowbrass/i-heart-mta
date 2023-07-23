@@ -48,6 +48,7 @@ class Trips(Resource):
 
         return make_response(trip.to_dict(), 201)
     
+    
 api.add_resource(Trips, '/trips')
 api.add_resource(Stations, '/stations')
 api.add_resource(SubwayStops, '/subwaystops')
