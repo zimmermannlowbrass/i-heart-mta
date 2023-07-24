@@ -12,10 +12,12 @@ import Controls from "./controls/Controls";
 function Map() {
 
     const [borough, setBorough] = useState('')
-    const [start, setStart] = useState([])
+    const [start, setStart] = useState('')
+    const [starts, setStarts] = useState([])
     const [route, setRoute] = useState('')
     const [color, setColor] = useState('')
-    const [end, setEnd] = useState([])
+    const [end, setEnd] = useState('')
+    const [ends, setEnds] = useState([])
     const [directions, setDirections] = useState()
     const [allDirections, setAllDirections] = useState([])
 
@@ -40,13 +42,12 @@ function Map() {
         .then(setTrips)
     }, [])
 
-    let test
 
     const handleTrips = useMemo(() => {
         for (let i = 0; trips.length > i; i ++) {
             console.log(trips[i])
-            setStart(start => [...start, {lat: trips[i].start_lat, lng: trips[i].start_lng}])
-            setStart(end => [...end, {lat: trips[i].end_lat, lng: trips[i].end_lng}])
+            setStart(starts => [...starts, {lat: trips[i].start_lat, lng: trips[i].start_lng}])
+            setStart(ends => [...ends, {lat: trips[i].end_lat, lng: trips[i].end_lng}])
             const service = new window.google.maps.DirectionsService()
             service.route({
                 origin: {lat: trips[i].start_lat, lng: trips[i].start_lng},
@@ -72,20 +73,21 @@ function Map() {
 
     const fetchDirections = () => {
         console.log(start, end)
-        // fetch("/trips",{
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         start_lat: start.lat,
-        //         start_lng: start.lng,
-        //         end_lat: end.lat,
-        //         end_lng: end.lng
-        //     })
-        // }) 
-        // .then( r => r.json())
-        // .then(data => console.log(data))
+        fetch("/trips",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                start_lat: start.lat,
+                start_lng: start.lng,
+                end_lat: end.lat,
+                end_lng: end.lng,
+                color: color
+            })
+        }) 
+        .then( r => r.json())
+        .then(data => console.log(data))
         const service = new window.google.maps.DirectionsService()
         service.route({
             origin: {lat: start.lat, lng: start.lng},
@@ -107,12 +109,12 @@ function Map() {
         })
     }
 
-    const start_markers = start.map(start => {
+    const start_markers = starts.map(start => {
         return (
             <Marker position={{lat: start.lat, lng: start.lng}}/>
         )
     })
-    const end_markers = end.map(end => {
+    const end_markers = ends.map(end => {
         return (
             <Marker position={{lat:end.lat, lng: end.lng}} />
         )
@@ -120,7 +122,7 @@ function Map() {
 
     console.log(allDirections)
 
-
+    console.log(start)
 
     function handleReset() {
         setBorough('')
@@ -131,7 +133,7 @@ function Map() {
 
     const directions_rendered = allDirections.map(direction => {
         return (
-            <div>
+            <div key={allDirections.indexOf(direction)}>
                 <DirectionsRenderer directions={direction} />
             </div>
         )

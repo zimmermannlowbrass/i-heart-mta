@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
         user = User(username='Bob', password='password')
 
-        # db.session.add(user)
+        db.session.add(user)
 
         stationdata = Stations().get_stations()
         stations = []

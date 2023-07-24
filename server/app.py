@@ -12,6 +12,41 @@ from models import db, User, Station, SubwayStop, Trip
 def index():
     return "Subways are cool"
 
+class Users(Resource):
+
+    def get(self):
+        users = User.query.all()
+        users_serialized = [user.to_dict() for user in users]
+        return make_response(users_serialized, 200)
+    
+    def post(self):
+        data = request.get_json()
+
+        user = User(
+            username=data['username'],
+            password=data['password']
+        )
+
+        db.session.add(user)
+        db.session.commit()
+
+        return make_response(user.to_dict(), 201)
+
+class Users_by_ID(Resource):
+
+    def get(self, id):
+        user = User.query.filter(User.id == id).first()
+        return make_response(user.to_dict(), 200)
+    
+    def delete(self, id):
+        user = User.query.filter(User.id == id).first()
+        db.session.delete(user)
+        db.session.commit()
+
+        return make_response({"message": "successful deletion of user!"}, 204)
+
+            
+
 class Stations(Resource):
 
     def get(self):
@@ -48,7 +83,15 @@ class Trips(Resource):
 
         return make_response(trip.to_dict(), 201)
     
+    def delete(self):
+        db.session.query(Trip).delete()
+        db.session.commit()
+
+        return make_response({"message": "successful deletion of all trips!"}, 204)
     
+
+api.add_resource(Users, '/users')
+api.add_resource(Users_by_ID, '/users/<int:id>')
 api.add_resource(Trips, '/trips')
 api.add_resource(Stations, '/stations')
 api.add_resource(SubwayStops, '/subwaystops')

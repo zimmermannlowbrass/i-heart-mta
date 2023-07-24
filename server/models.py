@@ -22,10 +22,12 @@ class Trip(db.Model, SerializerMixin):
     __tablename__ = 'trips'
 
     id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String)
     start_lat = db.Column(db.Float)
     start_lng = db.Column(db.Float)
     end_lat = db.Column(db.Float)
     end_lng = db.Column(db.Float)
+    color = db.Column(db.String)
 
     start_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
     end_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
