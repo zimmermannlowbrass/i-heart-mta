@@ -1,7 +1,6 @@
 import { useLoadScript } from "@react-google-maps/api"
 
-import Map from "./dashboard/Map";
-
+import Map from "./Map"
 function Home() {
 
   const googleAPIkey = process.env.REACT_APP_PUBLIC_GOOGLE_MAPS_API_KEY
