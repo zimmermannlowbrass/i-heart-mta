@@ -1,14 +1,13 @@
 import Welcome from './components/Welcome';
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 function App() {
 
+
+  // here I will set up login stuff
   return (
-    <BrowserRouter>
-      <div>
-        <Welcome />
-      </div>
-    </BrowserRouter>
+    <div>
+      <Welcome />
+    </div>
   )
 }
 

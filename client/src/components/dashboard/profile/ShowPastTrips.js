@@ -51,7 +51,7 @@ function ShowPastTrips() {
                     options={{
                         strokeColor: Object.keys(polylineDict),
                         strokeOpacity: .5,
-                        strokeWeight: 5,
+                        strokeWeight: 2,
                     }}
                 />
             </div> 

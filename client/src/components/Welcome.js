@@ -14,21 +14,25 @@ function Welcome() {
 
   return (
     <div>
-      <h1>
-        Welcome
-      </h1>
-      <NavBar />
-      <Switch>
-        <Route exact path="/profile">
-          <ProfileHome />
-        </Route>
-        <Route exact path="/profileOld">
-          <Home />
-        </Route>
-        <Route exact path="/managetrips">
-          <ManageTrips />
-        </Route>
-      </Switch>
+      <div className="NavBar">
+        <h1>
+          Welcome
+        </h1>
+        <NavBar />
+      </div>
+      <div className="Stuff">
+        <Switch>
+          <Route exact path="/profile">
+            <ProfileHome />
+          </Route>
+          <Route exact path="/profileOld">
+            <Home />
+          </Route>
+          <Route exact path="/managetrips">
+            <ManageTrips />
+          </Route>
+        </Switch>
+      </div>
     </div>
 
   )
