@@ -5,6 +5,7 @@ import {
     GoogleMap,
     Marker,
     DirectionsRenderer,
+    Polyline
 } from "@react-google-maps/api"
 
 import Controls from "./controls/Controls";
@@ -17,7 +18,8 @@ function Map() {
     const [route, setRoute] = useState('')
     const [color, setColor] = useState('')
     const [end, setEnd] = useState('')
-    const [allDirections, setAllDirections] = useState([])
+    const [path, setPath] = useState([])
+    const [directions, setDirections] = useState('')
 
     const [activate, setActivate] = useState(false)
     
@@ -26,14 +28,11 @@ function Map() {
     const options = useMemo(() => ({
         mapId: "343a9e311a65c41f",
         disableDefaultUI: true,
-        clickableIcons: false
+        clickableIcons: false,
     }), [])
 
 
     const onLoad = useCallback((map) => {mapRef.current = map}, [])
-
-
-
 
     const fetchDirections = () => {
         console.log(start, end)
@@ -61,14 +60,17 @@ function Map() {
             transitOptions: {
                 routingPreference: "FEWER_TRANSFERS",
                 modes: ['SUBWAY']
-            }
+            },
         }, 
         (result, status) => {
             if (status === 'OK' && result) {
-                console.log('HELPME')
-                // setDirections(result)
-                setAllDirections([...allDirections, result])
-                // handleReset()
+                const overview_path=result.routes[0].overview_path
+                setPath([])
+                for (let i=0; i<overview_path.length;i++) {
+                  console.log("latitude="+overview_path[i].lat()+", longitude="+overview_path[i].lng())
+                  setPath(path => [...path, {lat: overview_path[i].lat(), lng: overview_path[i].lng()}])
+                }
+                handleReset()
             } 
         })
     }
@@ -80,14 +82,11 @@ function Map() {
         setEnd('')
     } 
 
-
-
-
     return(
         <div className="continer">
             <div className="controls">
                 <button onClick={handleReset}>Reset data</button>
-                <button onClick={() => setActivate(true)}>Show past trips</button>
+                <button onClick={() => setActivate(!activate)}>Show past trips</button>
                 {!activate && <Controls 
                     start = {start}
                     onSetStart = {setStart}
@@ -116,14 +115,20 @@ function Map() {
                 options={options}
                 onLoad={onLoad}
                 >
+                    <Polyline 
+                    path={path} 
+                    geodesic = {true}
+                    options={{strokeColor: color,
+                    strokeOpacity: .5,
+                    strokeWeight: 5,
+                    }}
+                    />
+
                     <ShowPastTrips activate={activate}/>
-                    {/* {start_markers}
-                    {end_markers}
-                    {directions_rendered} */}
-                    {allDirections && 
+                    {directions && 
                     (
                     <DirectionsRenderer 
-                        directions={allDirections[0]} 
+                        directions={directions} 
                         options={{
                             polylineOptions: {
                                 strokeColor: color

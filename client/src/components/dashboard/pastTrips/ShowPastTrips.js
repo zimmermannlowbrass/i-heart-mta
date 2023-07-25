@@ -2,18 +2,13 @@ import React from "react";
 import { useEffect, useState, useMemo } from "react";
 
 import {
-    Marker,
-    DirectionsRenderer,
+    Polyline
 } from "@react-google-maps/api"
 
 function ShowPastTrips({ activate }) {
 
     const [trips, setTrips] = useState([])
-    const [starts, setStarts] = useState([])
-    const [ends, setEnds] = useState([])
-    const [allDirections, setAllDirections] = useState([])
-
-
+    const [polylineDicts, setPolylineDicts] = useState([])
 
     useEffect(() => {
         fetch("/trips")
@@ -23,54 +18,51 @@ function ShowPastTrips({ activate }) {
 
     useMemo(() => {
         for (let i = 0; trips.length > i; i ++) {
-            console.log(trips[i])
-            setStarts(starts => [...starts, {lat: trips[i].start_lat, lng: trips[i].start_lng}])
-            setEnds(ends => [...ends, {lat: trips[i].end_lat, lng: trips[i].end_lng}])
             const service = new window.google.maps.DirectionsService()
+            const dict = {}
             service.route({
                 origin: {lat: trips[i].start_lat, lng: trips[i].start_lng},
                 destination: {lat: trips[i].end_lat, lng: trips[i].end_lng},
                 waypoints: [],
-                travelMode: window.google.maps.TravelMode.TRANSIT,
+                travelMode:  window.google.maps.TravelMode.TRANSIT,
                 transitOptions: {
                     routingPreference: "FEWER_TRANSFERS",
-                    modes: ['SUBWAY']
-                }
+                    modes: ['SUBWAY'],
+                }, 
             }, 
             (result, status) => {
                 if (status === 'OK' && result) {
-                    // setDirections(result)
-                    setAllDirections(allDirections => [...allDirections, result])
+                    const overview_path=result.routes[0].overview_path
+                    const path = []
+                    for (let i=0 ; i<overview_path.length ; i++) {
+                        path.push({lat: overview_path[i].lat(), lng: overview_path[i].lng()})
+                    }
+                    dict[trips[i].color] = path
+                    setPolylineDicts(polylineDicts => [...polylineDicts, dict])
                 } 
-            })
+            })  
         }
     }, [activate])
 
-    const start_markers = starts.map(start => {
+    const polylines = polylineDicts.map(polylineDict => {
         return (
-            <Marker position={{lat: start.lat, lng: start.lng}}/>
+            <div key={polylineDicts.indexOf(polylineDict)}>
+                <Polyline 
+                    path={Object.values(polylineDict)[0]} 
+                    geodesic = {true}
+                    options={{
+                        strokeColor: Object.keys(polylineDict),
+                        strokeOpacity: .5,
+                        strokeWeight: 5,
+                    }}
+                />
+            </div> 
         )
     })
-    const end_markers = ends.map(end => {
-        return (
-            <Marker position={{lat:end.lat, lng: end.lng}} />
-        )
-    })
-
-    const directions_rendered = allDirections.map(direction => {
-        return (
-            <div key={allDirections.indexOf(direction)}>
-                <DirectionsRenderer directions={direction} />
-            </div>
-        )
-    })
-
 
     return (
         <div>
-            {start_markers}
-            {end_markers}
-            {directions_rendered}
+            {polylines}
         </div>
     )
 }
