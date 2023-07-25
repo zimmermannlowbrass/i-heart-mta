@@ -11,13 +11,15 @@ function Routes({ start, route, onSetRoutes}) {
 
     return (
         <div>
-            <Dropdown 
+            <Dropdown
+            className="combobox-input" 
             options={routes}
             disabled={route && true} 
             placeholder="which train..."
             onChange={e => onSetRoutes(e.value)}>
                 Which train?
             </Dropdown>
+            <br/>
         </div>
     )
 }

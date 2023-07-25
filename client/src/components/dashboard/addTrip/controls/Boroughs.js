@@ -7,7 +7,7 @@ function Boroughs({ borough, onSetBorough}) {
     const boroughs = ['M', 'Bk', 'Bx', 'Q']
 
     return (
-        <div>
+        <div className="boroughDropdown">
             <Dropdown 
             className="combobox-input" 
             placeholder="Pick a borough" 

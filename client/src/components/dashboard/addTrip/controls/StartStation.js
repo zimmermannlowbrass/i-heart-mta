@@ -46,7 +46,7 @@ function StartStation({start, onSetStart, borough, setPosition }) {
                 placeholder="start"
                 />
                 {!start && <ComboboxPopover>
-                    <ComboboxList>
+                    <ComboboxList className="combobox-list">
                         {station_choices_mapped}
                     </ComboboxList>
                 </ComboboxPopover>}

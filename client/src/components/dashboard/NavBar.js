@@ -4,9 +4,11 @@ import { NavLink } from "react-router-dom";
 function NavBar() {
     return (
         <div>
-            <NavLink to="/home">Go to map</NavLink>
+            <NavLink to="/profile">Profile</NavLink>
             <br />
-            <NavLink to="/profile">Go to profile</NavLink>
+            <NavLink to="/profileOld">Add a Trip</NavLink>
+            <br />
+            <NavLink to='/managetrips'>Manage Trips</NavLink>
         </div>
     )
 }
