@@ -8,8 +8,9 @@ import {
 } from "@react-google-maps/api"
 
 import Controls from "./controls/Controls";
+import NavBar from "../NavBar";
 
-function Map() {
+function AddTripMap() {
 
     const [borough, setBorough] = useState('')
     const [start, setStart] = useState('')
@@ -77,6 +78,7 @@ function Map() {
     return(
         <div className="continer">
             <div className="controls">
+                <NavBar />
                 <Controls 
                     start = {start}
                     onSetStart = {setStart}
@@ -122,4 +124,4 @@ function Map() {
     )
 }
 
-export default Map;
+export default AddTripMap;

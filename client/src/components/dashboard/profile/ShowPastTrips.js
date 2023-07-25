@@ -50,8 +50,8 @@ function ShowPastTrips() {
                     geodesic = {true}
                     options={{
                         strokeColor: Object.keys(polylineDict),
-                        strokeOpacity: .5,
-                        strokeWeight: 2,
+                        strokeOpacity: .1,
+                        strokeWeight: 1,
                     }}
                 />
             </div> 

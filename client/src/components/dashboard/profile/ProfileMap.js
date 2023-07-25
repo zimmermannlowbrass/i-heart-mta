@@ -6,30 +6,42 @@ import ShowPastTrips from "./ShowPastTrips";
 import {
     GoogleMap
 } from "@react-google-maps/api"
+import NavBar from "../NavBar";
 
 function ProfileMap() {
     const [active, setActive] = useState(false)
     const mapRef = useRef()
-    const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656 }), [])
+    const center = useMemo(() => ({ lat: 40.7, lng: -73.9 }), [])
     const options = useMemo(() => ({
         mapId: "343a9e311a65c41f",
         disableDefaultUI: true,
         clickableIcons: false,
+        gestureHandling: 'none'
     }), [])
 
 
     const onLoad = useCallback((map) => {
         mapRef.current = map
+        delayedPolylines()
     }, [])
+
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    const delayedPolylines = async () => {
+        await delay(5000)
+        setActive(!active)    
+      };
 
 
     return(
         <div className="continer">
-            <button onClick={() => setActive(!active)}>Show Past Trips</button>
+            <div className="controls">
+                <NavBar />
+                <button onClick={() => setActive(!active)}>Show Past Trips</button>
+            </div>
             <div className="map" id="map">
                 <GoogleMap 
-                zoom={13}
-                tilt={60}
+                zoom={12.3}
+                tilt={50}
                 heading={30}
                 center={center} 
                 mapContainerClassName="map-container"
