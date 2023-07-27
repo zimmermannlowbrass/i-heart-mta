@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Dropdown from 'react-dropdown';
-import Select from 'react-select';
 
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 

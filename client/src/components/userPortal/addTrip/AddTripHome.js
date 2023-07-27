@@ -10,8 +10,6 @@ function AddTripHome() {
     libraries: ["places"]
   })
 
-  console.log('hi')
-
   if (!isLoaded) return <div>Loading...</div>
   return (
     <div id="map">

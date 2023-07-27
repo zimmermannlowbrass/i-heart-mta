@@ -21,6 +21,8 @@ class User(db.Model, SerializerMixin):
 class Trip(db.Model, SerializerMixin):
     __tablename__ = 'trips'
 
+    serialize_rules = ('-subwaystopstart.station',)
+
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
     start_lat = db.Column(db.Float)
@@ -28,9 +30,11 @@ class Trip(db.Model, SerializerMixin):
     end_lat = db.Column(db.Float)
     end_lng = db.Column(db.Float)
     color = db.Column(db.String)
+    stops_travled = db.Column(db.Integer)
+    route = db.Column(db.String)
 
-    start_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
-    end_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
+    subwaystopstart_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
+    subwaystopstart = db.relationship('SubwayStop', back_populates='trips')
 
 
 class Station(db.Model, SerializerMixin):
@@ -53,6 +57,7 @@ class SubwayStop(db.Model, SerializerMixin):
     __tablename__ = 'subwaystops'
 
     serialize_rules = ('-station.subwaystops',)
+    serialize_rules = ('-trips.subwaystopstart',)
 
     id = db.Column(db.Integer, primary_key=True)
     route = db.Column(db.String)
@@ -62,6 +67,8 @@ class SubwayStop(db.Model, SerializerMixin):
 
     station_id = db.Column(db.Integer, db.ForeignKey('stations.id'))
     station = db.relationship('Station', back_populates='subwaystops')
+
+    trips = db.relationship('Trip', back_populates='subwaystopstart')
 
     def __repr__(self):
         return f'<SubwayStop>{self.position} along the {self.route} at {self.stationinitials}'

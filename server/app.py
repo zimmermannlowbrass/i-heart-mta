@@ -76,7 +76,8 @@ class Trips(Resource):
             start_lng=data['start_lng'],
             end_lat=data['end_lat'],
             end_lng=data['end_lng'],
-            color=data['color']
+            color=data['color'],
+            subwaystopstart_id=data['subwaystopstart_id']
         )
 
         db.session.add(trip)

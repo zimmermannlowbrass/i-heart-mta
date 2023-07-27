@@ -40,7 +40,8 @@ function AddTripMap() {
                 start_lng: start.lng,
                 end_lat: end.lat,
                 end_lng: end.lng,
-                color: color
+                color: color,
+                subwaystopstart_id: start.id
             })
         }) 
         .then( r => r.json())
@@ -67,7 +68,8 @@ function AddTripMap() {
             } 
         })
     }
-    console.log('rerender')
+    console.log(start)
+    console.log(end)
 
     const handleReset = () => {
         setBorough('')
