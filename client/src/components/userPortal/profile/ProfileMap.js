@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api"
 import NavBar from "../NavBar";
 
-function ProfileMap() {
+function ProfileMap({ user }) {
     const [active, setActive] = useState(false)
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7, lng: -73.9 }), [])
@@ -19,23 +19,18 @@ function ProfileMap() {
         gestureHandling: 'none'
     }), [])
 
-
     const onLoad = useCallback((map) => {
         mapRef.current = map
-        delayedPolylines()
     }, [])
 
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    const delayedPolylines = async () => {
-        await delay(5000)
-        setActive(!active)    
-      };
 
+    console.log(user)
 
     return(
         <div className="continer">
             <div className="controls">
                 <NavBar />
+                {/* <p>Welcome back {user.username}</p> */}
                 <button onClick={() => setActive(!active)}>Show Past Trips</button>
             </div>
             <div className="map" id="map">

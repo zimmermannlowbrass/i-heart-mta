@@ -9,7 +9,7 @@ function NavBar() {
             <br />
             <NavLink to="/addtrip">Add a Trip</NavLink>
             <br />
-            <NavLink to='/managetrips'>Manage Trips</NavLink>
+            <NavLink to='/dashboard'>Dashboard</NavLink>
         </div>
     )
 }

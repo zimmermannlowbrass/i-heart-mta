@@ -1,7 +1,7 @@
 import { useLoadScript } from "@react-google-maps/api"
 
-import ProfileMap from "./ProfileMap"
-function ProfileHome() {
+import AddTripMap from "./AddTripMap"
+function AddTripHome() {
 
   const googleAPIkey = process.env.REACT_APP_PUBLIC_GOOGLE_MAPS_API_KEY
 
@@ -10,12 +10,14 @@ function ProfileHome() {
     libraries: ["places"]
   })
 
+  console.log('hi')
+
   if (!isLoaded) return <div>Loading...</div>
   return (
     <div id="map">
-      <ProfileMap />
+      <AddTripMap />
     </div>
   );
 }
 
-export default ProfileHome;
+export default AddTripHome;

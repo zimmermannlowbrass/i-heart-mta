@@ -1,9 +1,16 @@
 import { useLoadScript } from "@react-google-maps/api"
+import { useContext } from "react";
 
-import AddTripMap from "./AddTripMap"
-function AddTripHome() {
+import { UserContext } from "../../../context/user";
+
+import ProfileMap from "./ProfileMap"
+
+function ProfileHome() {
 
   const googleAPIkey = process.env.REACT_APP_PUBLIC_GOOGLE_MAPS_API_KEY
+  const user = useContext(UserContext)
+  const currentUser = user[0]
+
 
   const { isLoaded } =  useLoadScript({
     googleMapsApiKey: googleAPIkey,
@@ -13,9 +20,9 @@ function AddTripHome() {
   if (!isLoaded) return <div>Loading...</div>
   return (
     <div id="map">
-      <AddTripMap />
+      <ProfileMap user={currentUser}/>
     </div>
   );
 }
 
-export default AddTripHome;
+export default ProfileHome;

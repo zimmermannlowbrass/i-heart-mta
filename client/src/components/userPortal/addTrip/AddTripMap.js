@@ -67,6 +67,7 @@ function AddTripMap() {
             } 
         })
     }
+    console.log('rerender')
 
     const handleReset = () => {
         setBorough('')
@@ -100,8 +101,8 @@ function AddTripMap() {
             </div>
             <div className="map" id="map">
                 <GoogleMap 
-                zoom={13}
-                tilt={60}
+                zoom={14}
+                tilt={90}
                 heading={30}
                 center={center} 
                 mapContainerClassName="map-container"

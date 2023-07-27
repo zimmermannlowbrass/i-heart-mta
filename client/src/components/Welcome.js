@@ -1,11 +1,10 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { UserProvider } from "../context/user";
 
-import NavBar from "./dashboard/NavBar";
-
-import AddTripHome from "./dashboard/addTrip/AddTripHome";
-import ProfileHome from "./dashboard/profile/ProfileHome"
-import ManageTrips from "./dashboard/manageTrips/ManageTrips";
+import AddTripHome from "./userPortal/addTrip/AddTripHome";
+import ProfileHome from "./userPortal/profile/ProfileHome"
+import Dashboard from "./userPortal/dashboard/Dashboard";
 
 function Welcome() {
 
@@ -13,17 +12,19 @@ function Welcome() {
   // profile (shows old map), past trips, add trips
 
   return (
-        <Switch>
-          <Route exact path="/">
-            <ProfileHome />
-          </Route>
-          <Route exact path="/addtrip">
-            <AddTripHome />
-          </Route>
-          <Route exact path="/managetrips">
-            <ManageTrips />
-          </Route>
-        </Switch>
+    <UserProvider>
+      <Switch>
+        <Route exact path="/addtrip">
+          <AddTripHome />
+        </Route>
+        <Route exact path="/dashboard">
+          <Dashboard />
+        </Route>
+        <Route exact path="/">
+          <ProfileHome />
+        </Route>
+      </Switch>
+    </UserProvider>
   )
 } 
 
