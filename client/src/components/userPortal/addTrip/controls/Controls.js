@@ -5,7 +5,7 @@ import EndStation from "./EndStation";
 import Boroughs from "./Boroughs";
 import Routes from "./Routes";
 
-function Controls({ start, onSetStart, end, onSetEnd, mapRef, onSetColor, borough, onSetBorough, route, onSetRoute, onReset}) {
+function Controls({ start, onSetStart, onSetStartId, end, onSetEnd, mapRef, onSetColor, borough, onSetBorough, route, onSetRoute, onReset}) {
 
     return (
         <div>
@@ -32,6 +32,7 @@ function Controls({ start, onSetStart, end, onSetEnd, mapRef, onSetColor, boroug
             <EndStation 
                 route = {route}
                 start = {start}
+                onSetStartId= {onSetStartId}
                 end ={end}
                 onSetColor = {onSetColor}
                 setPosition={(station) => {

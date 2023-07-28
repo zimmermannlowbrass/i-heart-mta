@@ -45,7 +45,46 @@ class Users_by_ID(Resource):
 
         return make_response({"message": "successful deletion of user!"}, 204)
 
-            
+class Login(Resource):
+
+    def get(self):
+        response_dict = {
+            "message": "Welcome to Logins!"
+        }
+        reponse = make_response(
+            response_dict,
+            200
+        )
+        return reponse
+    
+    def post(self):
+
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+
+        user = User.query.filter(
+            User.username == username
+        ).first()
+
+        if user:
+            # if user.authenticate(password):
+
+            #     session['user_id'] = user.id
+
+                response = make_response(
+                        jsonify(user.to_dict()),
+                        200
+                    )
+                return response
+            # return {'error': 'Incorrect password. Double check and try again!'}, 401
+
+        return {'error': 'Unauthorized Email. Double check and try again!'}, 401
+
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return {'message': '204: No Content'}, 204
 
 class Stations(Resource):
 
@@ -70,14 +109,13 @@ class Trips(Resource):
     
     def post(self):
         data = request.get_json()
-
         trip = Trip(
             start_lat=data['start_lat'],
             start_lng=data['start_lng'],
             end_lat=data['end_lat'],
             end_lng=data['end_lng'],
             color=data['color'],
-            subwaystopstart_id=data['subwaystopstart_id']
+            subwaystops_id=data['subwaystops_id']
         )
 
         db.session.add(trip)
@@ -94,6 +132,8 @@ class Trips(Resource):
 
 api.add_resource(Users, '/users')
 api.add_resource(Users_by_ID, '/users/<int:id>')
+api.add_resource(Login, '/logins')
+api.add_resource(Logout, '/logout')
 api.add_resource(Trips, '/trips')
 api.add_resource(Stations, '/stations')
 api.add_resource(SubwayStops, '/subwaystops')

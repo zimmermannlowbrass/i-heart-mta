@@ -18,7 +18,7 @@ function SignIn() {
             console.log(values)
         }
     })
-    console.log('hi')
+    console.log(currentUser)
 
     if (currentUser) {
         return <Welcome />

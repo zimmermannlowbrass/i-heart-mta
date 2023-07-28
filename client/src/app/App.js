@@ -8,6 +8,7 @@ function App() {
   return (
     <div>
       <UserProvider>
+        <h1>I ♥ MTA</h1>
         <SignIn />
       </UserProvider>
     </div>

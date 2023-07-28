@@ -5,7 +5,7 @@ import Dropdown from 'react-dropdown';
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 
 
-function EndStation({ route, start, end, onSetEnd, onSetColor, setPosition}){
+function EndStation({ route, start, onSetStartId, end, onSetEnd, onSetColor, setPosition}){
 
     const [subwaystops, setSubwayStops] = useState([])
     const [station, setStation] = useState('')
@@ -36,6 +36,7 @@ function EndStation({ route, start, end, onSetEnd, onSetColor, setPosition}){
 
     function handleSelect(e) {
         const x = e.indexOf('#')
+        onSetStartId(currentstop.id)
         const position_id = parseInt(e.slice(x + 1))
         console.log(position_id)
         const end = possible_subwaystops.filter(subwaystop => subwaystop.position === position_id)[0]
