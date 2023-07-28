@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api"
 import NavBar from "../NavBar";
 
-function ProfileMap({ user }) {
+function ProfileMap() {
     const [active, setActive] = useState(false)
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7, lng: -73.9 }), [])
@@ -23,14 +23,10 @@ function ProfileMap({ user }) {
         mapRef.current = map
     }, [])
 
-
-    console.log(user)
-
     return(
         <div className="continer">
             <div className="controls">
                 <NavBar />
-                {/* <p>Welcome back {user.username}</p> */}
                 <button onClick={() => setActive(!active)}>Show Past Trips</button>
             </div>
             <div className="map" id="map">

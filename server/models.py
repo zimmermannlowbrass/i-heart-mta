@@ -32,6 +32,7 @@ class Trip(db.Model, SerializerMixin):
     color = db.Column(db.String)
     stops_travled = db.Column(db.Integer)
     route = db.Column(db.String)
+    # need to add in the direction of the trip
 
     subwaystopstart_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
     subwaystopstart = db.relationship('SubwayStop', back_populates='trips')

@@ -1,12 +1,15 @@
-import Welcome from '../components/Welcome';
 import React from 'react';
+import SignIn from '../components/SignIn';
+import { UserProvider } from '../context/user';
 function App() {
 
 
   // here I will set up login stuff
   return (
     <div>
-      <Welcome />
+      <UserProvider>
+        <SignIn />
+      </UserProvider>
     </div>
   )
 }
