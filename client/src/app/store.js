@@ -1,14 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { tripReducer } from '../features/trips/tripsSlice'
-import { subwayStopReducer } from '../features/subwayStops/subwayStopsslice'
-//  trips
-
+import { searchRouteReducer } from '../features/searchRoute/searchRouteSlice'
+import { subwayStopReducer } from '../features/subwayStops/subwayStopsSlice'
 
 const reducers = {
     trips: tripReducer,
+    searchRoute: searchRouteReducer,
     subwayStops: subwayStopReducer
 }
+console.log(reducers)
 
 const rootReducer = combineReducers(reducers)
-const store = configureStore(rootReducer)
-// export default store
+export const store = configureStore({ reducer: rootReducer})
