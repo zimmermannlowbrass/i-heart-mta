@@ -1,27 +1,27 @@
 import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { selectTrips, loadData } from "./tripsSlice.js"
+import { selectTrips, loadTrips } from "./tripsSlice.js"
 
 
 function Trips() {
     const dispatch = useDispatch()
-    const onFirstRender = () => {
-        dispatch(loadData())
-      }
-    useEffect(onFirstRender, [])
+    useEffect(() => {
+        dispatch(loadTrips())
+      }, [dispatch])
     const trips = useSelector(selectTrips)
-    const tripList = trips.map(trip => {
-        return (
-            <ul key={trips.indexOf(trip)}>
-                {trip.route}
-            </ul>
-        )
-    })
+    console.log(trips)
+    // const tripList = trips.map(trip => {
+    //     return (
+    //         <ul key={trips.indexOf(trip)}>
+    //             {trip.route}
+    //         </ul>
+    //     )
+    // })
     return (
         <div>
             This is a trips component
-            {tripList}
+            {/* {tripList} */}
         </div>
     )
 }

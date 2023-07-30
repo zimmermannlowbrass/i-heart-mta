@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { tripReducer } from '../features/trips/tripsSlice'
+import tripsSliceReducer from '../features/trips/tripsSlice'
 import { searchRouteReducer } from '../features/searchRoute/searchRouteSlice'
-import { subwayStopReducer } from '../features/subwayStops/subwayStopsSlice'
+import subwayStopSliceReducer from '../features/subwayStops/subwayStopsSlice'
+import favoriteRoutesSliceReducer from '../features/favoriteRoutes/favoriteRoutesSlice'
 
 const reducers = {
-    trips: tripReducer,
+    trips: tripsSliceReducer,
     searchRoute: searchRouteReducer,
-    subwayStops: subwayStopReducer
+    subwayStops: subwayStopSliceReducer ,
+    favoriteRoutes: favoriteRoutesSliceReducer
 }
 console.log(reducers)
 

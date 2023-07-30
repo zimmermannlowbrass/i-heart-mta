@@ -18,7 +18,6 @@ function SignIn() {
             console.log(values)
         }
     })
-    console.log(currentUser)
 
     if (currentUser) {
         return <Welcome />

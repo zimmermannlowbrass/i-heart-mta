@@ -1,40 +1,51 @@
 import { subwaystops } from "../exampleData.js"
 import { selectSearchRoute } from '../searchRoute/searchRouteSlice.js'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
-// reducer and initial state
-const initialSubwayStops = []
-export const subwayStopReducer = (subwayStops = initialSubwayStops, action) => {
-    switch (action.type) {
-        case 'subwayStops/loadStops':
-            return action.payload
-        default:
-            return subwayStops
-    }        
-}
 
-// action types
-
-// this is now a selector
-// export const filterSubwayStops = (route) => {
-//     return {
-//         type: 'subwayStops/filterSubwayStops',
-//         payload: route
-//     }
-// }
-
-export const loadData = () => {
-    return {
-      type: 'subwayStops/loadStops',
-      payload: subwaystops
-    }
+export const loadSubwayStops = createAsyncThunk(
+  'subwayStops/loadSubwayStops',
+  async () => {
+      const data = await fetch("subwaystops")
+      const json = await data.json()
+      return json
   }
-  
+)
 
-// selectors
-export const selectAllSubwayStops = state => state.subwayStops
+export const subwayStopSlice = createSlice({
+  name: 'subwayStops',
+  initialState: {
+    subwaystops: [],
+    isLoading: false,
+    hasError: false
+  },
+  reducers: {},
+  extraReducers: {
+    [loadSubwayStops.pending]: (state, action) => {
+        state.isLoading = true;
+        state.hasError = false;
+      },
+    [loadSubwayStops.fulfilled]: (state, action) => {
+      state.subwaystops = action.payload
+      state.isLoading = false
+      state.hasError = false
+    },
+    [loadSubwayStops.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.hasError = true;
+      }
+  }
+})
+
+
+export const selectAllSubwayStops = state => state.subwayStops.subwaystops
 
 export const selectFilteredSubwayStops = state => {
     const allSubwayStops = selectAllSubwayStops(state)
     const searchRoute = selectSearchRoute(state)
     return allSubwayStops.filter(subwaystop => subwaystop.route === searchRoute)
   }
+
+
+
+export default subwayStopSlice.reducer

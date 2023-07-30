@@ -1,39 +1,44 @@
-import { trips } from "../exampleData.js"
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// reducer and initial state
-const initalTrips = []
-export const tripReducer = (trips = initalTrips, action) => {
-    switch(action.type) {
-        case 'trips/loadTrips':
-            return action.payload
-        case 'trips/filterRoute':
-            return trips.filter(trip => trip.route === action.payload)
-        case 'trips/deleteTrip':
-            return trips.filter(trip => trip.id !== action.payload.id)
-        default:
-            return trips
+// thunks
+export const loadTrips = createAsyncThunk(
+    'trips/loadTrips',
+    async () => {
+        const data = await fetch("trips")
+        const json = await data.json()
+        return json
     }
+)
+
+const options = {
+    name: 'trips',
+    initialState: {
+        trips: [],
+        isLoading: false,
+        hasError: false
+    },
+    reducers : {},
+    extraReducers: {
+        [loadTrips.pending]: (state, action) => {
+            state.isLoading = true;
+            state.hasError = false;
+          },
+        [loadTrips.fulfilled]: (state, action) => {
+          state.trips = action.payload
+          state.isLoading = false
+          state.hasError = false
+        },
+        [loadTrips.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.hasError = true;
+          }
+      }
 }
 
-// action types
-export const deleteTrip = (trip) => {
-    return {
-        type: 'trips/deleteTrip',
-        payload: trip
-    }
-}
-export const filterRoute = (route) => {
-    return {
-        type: 'trips/filterRoute',
-        payload: route
-    }
-}
-export const loadData = () => {
-    return {
-        type: 'trips/loadTrips',
-        payload: trips
-    }
-}
 
 // selectors
-export const selectTrips = state => state.trips 
+export const tripsSlice = createSlice(options)
+export const selectTrips = state => state.trips.trips
+
+export default tripsSlice.reducer
+
