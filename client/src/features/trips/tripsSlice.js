@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+const deleteTripAPI = (id) => {
+    fetch(`trips/${id}`, {
+        method : 'DELETE'
+    })
+}
+
 // thunks
 export const loadTrips = createAsyncThunk(
     'trips/loadTrips',
@@ -17,7 +23,12 @@ const options = {
         isLoading: false,
         hasError: false
     },
-    reducers : {},
+    reducers : {
+        deleteTrip: (state, action) => {
+            state.trips = state.trips.filter(trip => trip.id !== action.payload)
+            deleteTripAPI(action.payload)
+        }
+    },
     extraReducers: {
         [loadTrips.pending]: (state, action) => {
             state.isLoading = true;
@@ -39,6 +50,8 @@ const options = {
 // selectors
 export const tripsSlice = createSlice(options)
 export const selectTrips = state => state.trips.trips
+
+export const {deleteTrip} = tripsSlice.actions
 
 export default tripsSlice.reducer
 

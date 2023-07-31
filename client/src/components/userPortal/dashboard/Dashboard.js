@@ -10,9 +10,8 @@ function Dashboard() {
     return (
         <div>
             <NavBar />
-            This section is going to use Redux
             <div>
-                <FavoriteRoutes />
+                {/* <FavoriteRoutes /> */}
                 <Trips />
                 <SubwayStops />
             </div>

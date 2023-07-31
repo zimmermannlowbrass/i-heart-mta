@@ -18,6 +18,7 @@ function AddTripMap() {
     const [route, setRoute] = useState('')
     const [color, setColor] = useState('')
     const [end, setEnd] = useState('')
+    const [endId, setEndId] = useState('')
     const [path, setPath] = useState([])
     
     const mapRef = useRef()
@@ -37,12 +38,8 @@ function AddTripMap() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                start_lat: start.lat,
-                start_lng: start.lng,
-                end_lat: end.lat,
-                end_lng: end.lng,
-                color: color,
-                subwaystops_id: startId,
+                start_id: startId,
+                end_id: endId,
             })
         }) 
         .then( r => r.json())
@@ -69,8 +66,8 @@ function AddTripMap() {
             } 
         })
     }
-    console.log(start)
-    console.log(end)
+    console.log(startId)
+    console.log(endId)
 
     const handleReset = () => {
         setBorough('')
@@ -89,6 +86,7 @@ function AddTripMap() {
                     onSetStartId = {setStartId}
                     end = {end}
                     onSetEnd = {setEnd}
+                    onSetEndId = {setEndId}
                     mapRef = {mapRef}
                     onSetColor={setColor}
                     borough={borough}

@@ -1,6 +1,6 @@
 const initialRoute = ''
 
-export const searchRouteReducer = (route = initialRoute, action) => {
+const searchRouteReducer = (route = initialRoute, action) => {
   switch (action.type) {
     case 'searchRoute/setSearchRoute':
       return action.payload;
@@ -26,3 +26,5 @@ export function clearSearchRoute() {
 }
 
 export const selectSearchRoute = (state) => state.searchRoute;
+
+export default searchRouteReducer

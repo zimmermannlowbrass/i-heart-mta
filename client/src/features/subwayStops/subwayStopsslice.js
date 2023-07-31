@@ -1,4 +1,3 @@
-import { subwaystops } from "../exampleData.js"
 import { selectSearchRoute } from '../searchRoute/searchRouteSlice.js'
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
@@ -19,7 +18,11 @@ export const subwayStopSlice = createSlice({
     isLoading: false,
     hasError: false
   },
-  reducers: {},
+  reducers: {
+    filterSubwayStops: (state, action) => {
+      state.subwaystops = state.subwaystops.filter(subwaystop => subwaystop.route === action.payload)
+    }
+  },
   extraReducers: {
     [loadSubwayStops.pending]: (state, action) => {
         state.isLoading = true;
@@ -37,12 +40,17 @@ export const subwayStopSlice = createSlice({
   }
 })
 
+export const {
+  filterSubwayStops
+} = subwayStopSlice.actions
+
 
 export const selectAllSubwayStops = state => state.subwayStops.subwaystops
 
-export const selectFilteredSubwayStops = state => {
+export const selectFilteredSubwayStops = (state) => {
     const allSubwayStops = selectAllSubwayStops(state)
     const searchRoute = selectSearchRoute(state)
+    if (!searchRoute) return allSubwayStops
     return allSubwayStops.filter(subwaystop => subwaystop.route === searchRoute)
   }
 

@@ -48,29 +48,26 @@ class User(db.Model, SerializerMixin):
 class Trip(db.Model, SerializerMixin):
     __tablename__ = 'trips'
 
-    serialize_rules = ('-subwaystops.trips', '-user.trips', )
+    serialize_rules = ('-subwaystops.station', '-start.start', '-stop.stop', )
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
-    start_lat = db.Column(db.Float)
-    start_lng = db.Column(db.Float)
-    end_lat = db.Column(db.Float)
-    end_lng = db.Column(db.Float)
-    color = db.Column(db.String)
-    stops_travled = db.Column(db.Integer)
-    route = db.Column(db.String)
-    forwardDirection = db.Column(db.Boolean)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))    
 
-    subwaystops_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
-    subwaystops = db.relationship('SubwayStop', back_populates='trips')
+    start_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
+    stop_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
+
+    start = db.relationship('SubwayStop', backref='start', foreign_keys=[start_id])
+    stop = db.relationship('SubwayStop', backref='stop', foreign_keys=[stop_id])
+
+    
     
 
 class Station(db.Model, SerializerMixin):
     __tablename__ = 'stations'
     
-    serialize_rules = ('-subwaystops.station',)
+    serialize_rules = ('-subwaystops.station', '-subwaystops.start')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -86,7 +83,7 @@ class Station(db.Model, SerializerMixin):
 class SubwayStop(db.Model, SerializerMixin):
     __tablename__ = 'subwaystops'
 
-    serialize_rules = ('-station.subwaystops', '-trips.subwaystops')
+    serialize_rules = ('-station.subwaystops', '-stop', '-start',)
 
     id = db.Column(db.Integer, primary_key=True)
     route = db.Column(db.String)
@@ -97,7 +94,7 @@ class SubwayStop(db.Model, SerializerMixin):
     station_id = db.Column(db.Integer, db.ForeignKey('stations.id'))
     station = db.relationship('Station', back_populates='subwaystops')
 
-    trips = db.relationship('Trip', back_populates='subwaystops')
+    # trips = db.relationship('Trip', primaryjoin="SubwayStop.id==Trip.subwaystops_id")
     
 
     def __repr__(self):

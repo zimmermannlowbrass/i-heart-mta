@@ -110,12 +110,8 @@ class Trips(Resource):
     def post(self):
         data = request.get_json()
         trip = Trip(
-            start_lat=data['start_lat'],
-            start_lng=data['start_lng'],
-            end_lat=data['end_lat'],
-            end_lng=data['end_lng'],
-            color=data['color'],
-            subwaystops_id=data['subwaystops_id']
+            start_id=data['start_id'],
+            stop_id=data['end_id']
         )
 
         db.session.add(trip)
@@ -127,14 +123,29 @@ class Trips(Resource):
         db.session.query(Trip).delete()
         db.session.commit()
 
-        return make_response({"message": "successful deletion of all trips!"}, 204)
+        return {"message": "successful deletion of all trips!"}, 204
     
+class Trip_by_ID(Resource):
+
+    def get(self, id):
+        trip = Trip.query.filter(Trip.id == id).first()
+        return make_response(trip.to_dict(), 200)
+    
+    def delete(self, id):
+        trip = Trip.query.filter(Trip.id == id).first()
+        db.session.delete(trip)
+        db.session.commit()
+
+        return {"message": "successful deletion of trip!"}, 204
+
+
 
 api.add_resource(Users, '/users')
 api.add_resource(Users_by_ID, '/users/<int:id>')
 api.add_resource(Login, '/logins')
 api.add_resource(Logout, '/logout')
 api.add_resource(Trips, '/trips')
+api.add_resource(Trip_by_ID, '/trips/<int:id>')
 api.add_resource(Stations, '/stations')
 api.add_resource(SubwayStops, '/subwaystops')
 
