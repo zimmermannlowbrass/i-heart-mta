@@ -22,7 +22,8 @@ function App() {
     setShowSignUp(true)
   }
 
-  if (currentUser) {
+  console.log(user)
+  if (user) {
     return <Welcome />
   }
   return (

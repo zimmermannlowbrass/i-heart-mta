@@ -69,18 +69,23 @@ class Login(Resource):
         ).first()
 
         if user:
-            # if user.authenticate(password):
-
-            #     session['user_id'] = user.id
+            if user.authenticate(password):
+                session['user_id'] = user.id
 
                 response = make_response(
                         jsonify(user.to_dict()),
                         200
                     )
                 return response
-            # return {'error': 'Incorrect password. Double check and try again!'}, 401
+            return {'error': 'Incorrect password. Double check and try again!'}, 401
 
         return {'error': 'Unauthorized Email. Double check and try again!'}, 401
+
+class CheckSession(Resource):
+    def get(self):
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return make_response(user.to_dict(), 200)
 
 class Logout(Resource):
     def delete(self):
@@ -144,6 +149,7 @@ class Trip_by_ID(Resource):
 api.add_resource(Users, '/users')
 api.add_resource(Users_by_ID, '/users/<int:id>')
 api.add_resource(Login, '/logins')
+api.add_resource(CheckSession, '/checksession')
 api.add_resource(Logout, '/logout')
 api.add_resource(Trips, '/trips')
 api.add_resource(Trip_by_ID, '/trips/<int:id>')

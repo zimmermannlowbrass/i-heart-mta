@@ -13,6 +13,7 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
+    password = db.Column(db.String)
     borough = db.Column(db.String)
     name = db.Column(db.String)
     _password_hash = db.Column(db.String)

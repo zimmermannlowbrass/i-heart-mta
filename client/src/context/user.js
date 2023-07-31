@@ -8,11 +8,13 @@ function UserProvider({ children }) {
 
   const [user, setUser] = useState('')
   useEffect(() => {
-    fetch('users')
-    .then(r => r.json())
-    .then(setUser)
+    fetch("/checksession")
+      .then((response) => {
+        if (response.ok) {
+          response.json()
+          .then((user) => setUser(user))
+        }})
   }, [])
-
 
   return (
     <UserContext.Provider value={{user, setUser}}>
