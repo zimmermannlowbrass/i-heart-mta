@@ -6,7 +6,7 @@ const deleteTripAPI = (id) => {
     })
 }
 
-// thunks
+// thunk
 export const loadTrips = createAsyncThunk(
     'trips/loadTrips',
     async () => {

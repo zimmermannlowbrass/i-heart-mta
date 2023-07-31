@@ -22,15 +22,16 @@ class Users(Resource):
     def post(self):
         data = request.get_json()
 
-        user = User(
+        new_user = User(
             username=data['username'],
-            password=data['password']
+            password=data['password'],
+            name=data['name']
         )
-
-        db.session.add(user)
+        new_user.password_hash = new_user.password
+        db.session.add(new_user)
         db.session.commit()
 
-        return make_response(user.to_dict(), 201)
+        return make_response(new_user.to_dict(), 201)
 
 class Users_by_ID(Resource):
 

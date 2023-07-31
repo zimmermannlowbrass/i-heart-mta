@@ -1,16 +1,39 @@
 import React from 'react';
+import { useContext, useState } from 'react';
 import SignIn from '../components/SignIn';
-import { UserProvider } from '../context/user';
+import SignUp from '../components/SignUp'
+import { UserContext } from "../context/user";
+import Welcome from '../components/Welcome';
+
 function App() {
+  const {user} = useContext(UserContext)
+  const [currentUser, setCurrentUser] = useState()
+  const [showSignIn, setShowSignIn] = useState(false)
+  const [showSignUp, setShowSignUp] = useState(false)
 
 
-  // here I will set up login stuff
+  function handleSignInClick() {
+    setShowSignIn(true)
+    setShowSignUp(false)
+  }
+
+  function handleSignUpClick() {
+    setShowSignIn(false)
+    setShowSignUp(true)
+  }
+
+  if (currentUser) {
+    return <Welcome />
+  }
   return (
     <div>
-      <UserProvider>
         <h1>I ♥ MTA</h1>
-        <SignIn />
-      </UserProvider>
+        <button onClick={() => setCurrentUser(user[0])}>Click me</button>
+        <br />
+        <button onClick={() => handleSignInClick()}>Sign In</button>
+        <button onClick={() => handleSignUpClick()}>Register New User</button>
+        {showSignIn && <SignIn />}
+        {showSignUp && <SignUp />}
     </div>
   )
 }

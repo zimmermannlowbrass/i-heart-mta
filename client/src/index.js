@@ -3,23 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './app/App';
 import { BrowserRouter } from 'react-router-dom';
-// import { store } from "./app/store"
+import { UserProvider } from './context/user';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <App />
+    <UserProvider>
+      <App />
+    </UserProvider>
   </BrowserRouter>
 );
-
-// const render = () => {
-//   root.render(
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//   )
-// }
-// render()
-// store.subscrib(render)
 

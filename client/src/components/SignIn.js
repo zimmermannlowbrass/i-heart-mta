@@ -1,13 +1,8 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 
-import { UserContext } from "../context/user";
-import Welcome from "./Welcome";
-
 function SignIn() {
-    const {user} = useContext(UserContext)
-    const [currentUser, setCurrentUser] = useState()
     const [showPasword, setShowPassword] = useState(false)
     const formik = useFormik({
         initialValues: {
@@ -18,10 +13,6 @@ function SignIn() {
             console.log(values)
         }
     })
-
-    if (currentUser) {
-        return <Welcome />
-    }
 
     return (
         <div>
@@ -51,7 +42,6 @@ function SignIn() {
               <button type="submit">Sign In</button>
             </form>
             <br />
-            <button onClick={() => setCurrentUser(user[0])}>Click me</button>
             <br />
             <h3>Don't have an account yet?</h3>
         </div>

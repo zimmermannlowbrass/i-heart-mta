@@ -22,8 +22,8 @@ function ShowPastTrips() {
             const service = new window.google.maps.DirectionsService()
             const dict = {}
             service.route({
-                origin: {lat: trips[i].start_lat, lng: trips[i].start_lng},
-                destination: {lat: trips[i].end_lat, lng: trips[i].end_lng},
+                origin: {lat: trips[i].start.station.lat, lng: trips[i].start.station.lng},
+                destination: {lat: trips[i].stop.station.lat, lng: trips[i].stop.station.lng},
                 waypoints: [],
                 travelMode:  window.google.maps.TravelMode.TRANSIT,
                 transitOptions: {
@@ -38,7 +38,7 @@ function ShowPastTrips() {
                     for (let i=0 ; i<overview_path.length ; i++) {
                         path.push({lat: overview_path[i].lat(), lng: overview_path[i].lng()})
                     }
-                    dict[trips[i].color] = path
+                    dict[trips[i].start.color] = path
                     setPolylineDicts(polylineDicts => [...polylineDicts, dict])
                 } 
             })  

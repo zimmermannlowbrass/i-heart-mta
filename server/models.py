@@ -6,23 +6,15 @@ import sqlalchemy as sa
 
 from config import db, bcrypt
 
-# trip_subwaystop = db.Table(
-#     "trip_subwaystop",
-#     db.Column("trip_id", db.ForeignKey('trips.id'), primary_key=True),
-#     db.Column("subwaystop_id", db.ForeignKey('subwaystops.id'), primary_key=True),
-# )
-
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     serialize_rules = ('-trips.user', '-_password_hash',)
 
-
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
     borough = db.Column(db.String)
-    description = db.Column(db.String)
+    name = db.Column(db.String)
     _password_hash = db.Column(db.String)
 
     trips = db.relationship('Trip', backref='user')
@@ -42,7 +34,7 @@ class User(db.Model, SerializerMixin):
             self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
-        return f'<User>{self.username}'
+        return f'<User>{self.name}'
     
 
 class Trip(db.Model, SerializerMixin):

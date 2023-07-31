@@ -5,7 +5,7 @@ import { UserContext } from "../../context/user";
 
 function NavBar() {
 
-    const {setUser} = useContext(UserContext)
+    const {user, setUser} = useContext(UserContext)
 
     function handleSignOut() {
         console.log('you signed out!')
@@ -15,7 +15,7 @@ function NavBar() {
     return (
         <div>
             <button onClick={() => handleSignOut()}>Sign Out</button>
-            <h1>Welcome</h1>
+            <h1>{user[0].username}</h1>
             <NavLink to="/">Profile</NavLink>
             <br />
             <NavLink to="/addtrip">Add a Trip</NavLink>
