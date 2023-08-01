@@ -1,11 +1,7 @@
-server:
+Need to make sure that there can only be one user made at a time
 
-migrate the columns again to change subway initials to subway names in scrape data
-cross reference name in scrape and name in pandas
+Front end needs to make sure that we can check there is one upper case letter OR we need to remove validation from backend
 
+Finish favorite route feature and offer more statistics on feature seciton
 
-client:
-
-move useEffect from places up to the map
-reconfigure places module to be "Start"
-add new module "End"
+Make sure that user is only populating their specific trips

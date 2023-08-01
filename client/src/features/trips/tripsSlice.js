@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const deleteTripAPI = (id) => {
-    fetch(`trips/${id}`, {
+    fetch(`http://localhost:4000/trips/${id}`, {
         method : 'DELETE'
     })
 }
@@ -10,7 +10,7 @@ const deleteTripAPI = (id) => {
 export const loadTrips = createAsyncThunk(
     'trips/loadTrips',
     async () => {
-        const data = await fetch("trips")
+        const data = await fetch("http://localhost:4000/trips")
         const json = await data.json()
         return json
     }

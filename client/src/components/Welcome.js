@@ -8,24 +8,23 @@ import AddTripHome from "./userPortal/addTrip/AddTripHome";
 import ProfileHome from "./userPortal/profile/ProfileHome"
 import Dashboard from "./userPortal/dashboard/Dashboard";
 
-
 function Welcome() {
 
-
+  console.log('welcome')
   // profile (shows old map), past trips, and dashboard
 
   return (
     <Switch>
-      <Route exact path="/">
-        <ProfileHome />
-      </Route>
-      <Route exact path="/addtrip">
+      <Route path="/addtrip">
         <AddTripHome />
       </Route>
-      <Route exact path="/dashboard">
+      <Route path="/dashboard">
         <Provider store={store}>
           <Dashboard />
         </Provider>
+      </Route>
+      <Route exact path="/">
+        <ProfileHome />
       </Route>
     </Switch>
   )

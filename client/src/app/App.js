@@ -1,40 +1,42 @@
 import React from 'react';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
+
 import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp'
+import { NavLink, Route, Switch } from "react-router-dom";
+
 import { UserContext } from "../context/user";
 import Welcome from '../components/Welcome';
 
 function App() {
   const {user} = useContext(UserContext)
-  const [currentUser, setCurrentUser] = useState()
-  const [showSignIn, setShowSignIn] = useState(false)
-  const [showSignUp, setShowSignUp] = useState(false)
-
-
-  function handleSignInClick() {
-    setShowSignIn(true)
-    setShowSignUp(false)
-  }
-
-  function handleSignUpClick() {
-    setShowSignIn(false)
-    setShowSignUp(true)
-  }
 
   console.log(user)
   if (user) {
-    return <Welcome />
+    return (
+      <Welcome/>
+    )
   }
   return (
     <div>
         <h1>I ♥ MTA</h1>
-        <button onClick={() => setCurrentUser(user[0])}>Click me</button>
         <br />
-        <button onClick={() => handleSignInClick()}>Sign In</button>
-        <button onClick={() => handleSignUpClick()}>Register New User</button>
-        {showSignIn && <SignIn />}
-        {showSignUp && <SignUp />}
+        <NavLink exact to="/signin">
+          <button>Sign In</button>
+        </NavLink>
+        <NavLink exact to="/signup">
+          <button>New Member</button>
+        </NavLink>
+        <br />
+        <br />
+        <Switch>
+          <Route exact path="/signIn">
+            <SignIn />
+          </Route>
+          <Route exact path="/signUp">
+            <SignUp />
+          </Route>
+        </Switch>
     </div>
   )
 }

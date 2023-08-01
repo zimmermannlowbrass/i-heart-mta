@@ -9,8 +9,11 @@ function NavBar() {
 
     function handleSignOut() {
         console.log('you signed out!')
-        setUser(null)
-        window.location.reload()
+
+        fetch('/logout', {
+            method: 'DELETE'
+        })
+        .then(setUser(null))
     }
     return (
         <div>

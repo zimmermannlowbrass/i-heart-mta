@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useCallback, useRef, useContext } from "react";
 
 import {
     GoogleMap,
@@ -9,8 +9,11 @@ import {
 
 import Controls from "./controls/Controls";
 import NavBar from "../NavBar";
+import { UserContext } from "../../../context/user";
 
 function AddTripMap() {
+    
+    const {user} = useContext(UserContext)
 
     const [borough, setBorough] = useState('')
     const [start, setStart] = useState('')
@@ -40,6 +43,7 @@ function AddTripMap() {
             body: JSON.stringify({
                 start_id: startId,
                 end_id: endId,
+                user_id: user.id
             })
         }) 
         .then( r => r.json())

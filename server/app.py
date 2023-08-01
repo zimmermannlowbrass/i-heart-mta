@@ -117,7 +117,8 @@ class Trips(Resource):
         data = request.get_json()
         trip = Trip(
             start_id=data['start_id'],
-            stop_id=data['end_id']
+            stop_id=data['end_id'],
+            user_id=data['user_id']
         )
 
         db.session.add(trip)

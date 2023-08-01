@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 export const loadSubwayStops = createAsyncThunk(
   'subwayStops/loadSubwayStops',
   async () => {
-      const data = await fetch("subwaystops")
+      const data = await fetch("http://localhost:4000/subwaystops ")
       const json = await data.json()
       return json
   }
