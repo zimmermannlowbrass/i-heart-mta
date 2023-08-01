@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
 
+import '../stylesheets/signin.css'
 
 import { UserContext } from "../context/user";
 
@@ -39,9 +40,9 @@ function SignIn() {
   })
 
   return (
-      <div>
+      <div className="signin-form">
           <form onSubmit={formik.handleSubmit}>
-            <label className="textBox" htmlFor="Username">Username</label>
+            <label className="textBox" htmlFor="Username">Username: </label>
             <input
             id="username"
             name="username"
@@ -50,7 +51,7 @@ function SignIn() {
             />
             <br />
             <br />
-            <label className="textBox" htmlFor="password">Password</label>
+            <label className="textBox" htmlFor="password">Password: </label>
             <input
             type={showPasword ? null : "password"}
             id="password"
@@ -59,11 +60,10 @@ function SignIn() {
             value={formik.values.password}
             />
             <button type="button" onClick={() =>setShowPassword(!showPasword)}>
-                {showPasword ? "hide password" : "show password"}
+                {showPasword ? "hide" : "show"}
             </button>
             <br />
-            <br />
-            <button type="submit">Sign In</button>
+            <button style={{alignItems: 'center'}} type="submit">Sign In</button>
           </form>
       </div>
   )

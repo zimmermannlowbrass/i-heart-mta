@@ -58,6 +58,7 @@ class Trip(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String)
+    isFavorite = db.Column(db.Boolean)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))    
 
@@ -65,9 +66,7 @@ class Trip(db.Model, SerializerMixin):
     stop_id = db.Column(db.Integer, db.ForeignKey('subwaystops.id'))
 
     start = db.relationship('SubwayStop', backref='start', foreign_keys=[start_id])
-    stop = db.relationship('SubwayStop', backref='stop', foreign_keys=[stop_id])
-
-    
+    stop = db.relationship('SubwayStop', backref='stop', foreign_keys=[stop_id])  
     
 
 class Station(db.Model, SerializerMixin):
@@ -101,7 +100,6 @@ class SubwayStop(db.Model, SerializerMixin):
     station = db.relationship('Station', back_populates='subwaystops')
 
     # trips = db.relationship('Trip', primaryjoin="SubwayStop.id==Trip.subwaystops_id")
-    
 
     def __repr__(self):
         return f'<SubwayStop>{self.position} along the {self.route}'

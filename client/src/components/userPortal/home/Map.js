@@ -8,7 +8,7 @@ import {
 } from "@react-google-maps/api"
 import NavBar from "../NavBar";
 
-function ProfileMap() {
+function Map() {
     const [active, setActive] = useState(false)
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7, lng: -73.9 }), [])
@@ -46,4 +46,4 @@ function ProfileMap() {
     )
 }
 
-export default ProfileMap;
+export default Map;

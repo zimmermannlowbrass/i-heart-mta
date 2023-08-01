@@ -5,7 +5,7 @@ import Dropdown from 'react-dropdown';
 function Routes({ start, route, onSetRoutes}) {
     
     const routes = []
-    for (let route of start.routes) {
+    for (const route of start.routes) {
         routes.push(route)
     }
 
@@ -15,7 +15,7 @@ function Routes({ start, route, onSetRoutes}) {
             className="combobox-input" 
             options={routes}
             disabled={route && true} 
-            placeholder="which train..."
+            placeholder="Which train are you taking?"
             onChange={e => onSetRoutes(e.value)}>
                 Which train?
             </Dropdown>

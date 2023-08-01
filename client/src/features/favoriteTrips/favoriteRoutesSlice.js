@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const favs = ['1', '2', 'C']
 const options = {
-  name: "favoriteRoutes",
+  name: "favoriteTrips",
   initialState: [],
   reducers: {
-    loadFavs: (state, action) => {
+    loadFavs: () => {
         return favs 
     },
     addRoute: (state, action) => {
@@ -18,6 +18,9 @@ const options = {
 }
 
 
-export const selectFavoriteRoutes = (state) => state.favoriteRoutes;
-const favoriteRoutesSlice = createSlice(options);
-export default favoriteRoutesSlice.reducer
+export const selectFavoriteTrips = (state) => state.favoriteTrips;
+const favoriteTripsSlice = createSlice(options);
+export const {
+  loadFavs
+} = favoriteTripsSlice.actions
+export default favoriteTripsSlice.reducer

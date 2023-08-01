@@ -1,8 +1,8 @@
 import { useLoadScript } from "@react-google-maps/api"
 
-import ProfileMap from "./ProfileMap"
+import Map from "./Map"
 
-function ProfileHome() {
+function Home() {
 
   const googleAPIkey = process.env.REACT_APP_PUBLIC_GOOGLE_MAPS_API_KEY
 
@@ -14,9 +14,9 @@ function ProfileHome() {
   if (!isLoaded) return <div>Loading...</div>
   return (
     <div id="map">
-      <ProfileMap/>
+      <Map/>
     </div>
   );
 }
 
-export default ProfileHome;
+export default Home;

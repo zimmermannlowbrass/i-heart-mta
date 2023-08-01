@@ -5,14 +5,11 @@ import { Provider } from 'react-redux'
 import { store } from "../app/store"
 
 import AddTripHome from "./userPortal/addTrip/AddTripHome";
-import ProfileHome from "./userPortal/profile/ProfileHome"
+import Home from "./userPortal/home/Home"
 import Dashboard from "./userPortal/dashboard/Dashboard";
 
 function Welcome() {
-
-  console.log('welcome')
-  // profile (shows old map), past trips, and dashboard
-
+  
   return (
     <Switch>
       <Route path="/addtrip">
@@ -24,7 +21,7 @@ function Welcome() {
         </Provider>
       </Route>
       <Route exact path="/">
-        <ProfileHome />
+        <Home />
       </Route>
     </Switch>
   )

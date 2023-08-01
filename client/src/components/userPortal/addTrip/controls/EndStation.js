@@ -5,7 +5,7 @@ import Dropdown from 'react-dropdown';
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 
 
-function EndStation({ route, start, onSetStartId, end, onSetEnd, onSetEndId, onSetColor, setPosition}){
+function EndStation({ route, start, onSetStartId, end, onSetEndId, onSetColor, setPosition}){
 
     const [subwaystops, setSubwayStops] = useState([])
     const [station, setStation] = useState('')
@@ -17,17 +17,20 @@ function EndStation({ route, start, onSetStartId, end, onSetEnd, onSetEndId, onS
         .then(setSubwayStops)
     }, [])
 
-    const subwaystops_in_route = subwaystops.filter(subwaystop => subwaystop.route === route)
-    const currentstop = subwaystops_in_route.filter(stop => stop.station.id === start.id)[0]
-    const possible_subwaystops = subwaystops_in_route.filter(subwaystop => {
+    const subwaystopsInRoute = subwaystops.filter(subwaystop => subwaystop.route === route)
+    const currentstop = subwaystopsInRoute.filter(stop => stop.station.id === start.id)[0]
+    const subwaystopsOnRoute = subwaystopsInRoute.filter(subwaystop => {
         if (direction === 'uptown') {
             return subwaystop.position < currentstop.position
         } else if (direction === 'downtown') {
             return subwaystop.position > currentstop.position
         } else return false
     })
+    console.log(subwaystopsOnRoute)
+    const station_choices = subwaystopsOnRoute.filter(stationOnRoute => stationOnRoute.stationname.toUpperCase().includes(station.toUpperCase()))
 
-    const comboboxoptions = possible_subwaystops.map(stop => {
+
+    const comboboxoptions = station_choices.map(stop => {
         const value = stop.stationname + ' - stop #' + stop.position
         return (
             <ComboboxOption key={stop.stationname} value={value}>{stop.stationname}</ComboboxOption>
@@ -39,13 +42,13 @@ function EndStation({ route, start, onSetStartId, end, onSetEnd, onSetEndId, onS
         onSetStartId(currentstop.id)
         const position_id = parseInt(e.slice(x + 1))
         console.log(position_id)
-        const end = possible_subwaystops.filter(subwaystop => subwaystop.position === position_id)[0]
+        const end = station_choices.filter(subwaystop => subwaystop.position === position_id)[0]
         onSetEndId(end.id)
         setPosition(end.station)
         onSetColor(end.color)
         setStation(e.slice(0 ,(x - 8)))
     }
-
+    console.log(station)
     return (
         <div>
             <Dropdown
@@ -63,7 +66,7 @@ function EndStation({ route, start, onSetStartId, end, onSetEnd, onSetEndId, onS
                     className="combobox-input"
                     placeholder="end"
                     />
-                    {!station && <ComboboxPopover>
+                    {!end && <ComboboxPopover>
                         <ComboboxList className="combobox-list">
                             {comboboxoptions}
                         </ComboboxList>

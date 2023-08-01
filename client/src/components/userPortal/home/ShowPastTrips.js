@@ -1,5 +1,6 @@
 import React from "react";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
+import { UserContext } from "../../../context/user";
 
 import {
     Polyline
@@ -7,6 +8,7 @@ import {
 
 function ShowPastTrips() {
 
+    const {user} = useContext(UserContext)
     const [trips, setTrips] = useState([])
     const [polylineDicts, setPolylineDicts] = useState([])
 
@@ -16,14 +18,14 @@ function ShowPastTrips() {
         .then(setTrips)
     }, [])
 
+    const userTrips = trips.filter(trip => trip.user_id === user.id)
     const makePolylines = () => {
-        console.log('hi')
-        for (let i = 0; trips.length > i; i++) {
+        for (let i = 0; userTrips.length > i; i++) {
             const service = new window.google.maps.DirectionsService()
             const dict = {}
             service.route({
-                origin: {lat: trips[i].start.station.lat, lng: trips[i].start.station.lng},
-                destination: {lat: trips[i].stop.station.lat, lng: trips[i].stop.station.lng},
+                origin: {lat: userTrips[i].start.station.lat, lng: userTrips[i].start.station.lng},
+                destination: {lat: userTrips[i].stop.station.lat, lng: userTrips[i].stop.station.lng},
                 waypoints: [],
                 travelMode:  window.google.maps.TravelMode.TRANSIT,
                 transitOptions: {
@@ -38,7 +40,7 @@ function ShowPastTrips() {
                     for (let i=0 ; i<overview_path.length ; i++) {
                         path.push({lat: overview_path[i].lat(), lng: overview_path[i].lng()})
                     }
-                    dict[trips[i].start.color] = path
+                    dict[userTrips[i].start.color] = path
                     setPolylineDicts(polylineDicts => [...polylineDicts, dict])
                 } 
             })  
@@ -54,7 +56,7 @@ function ShowPastTrips() {
                     options={{
                         strokeColor: Object.keys(polylineDict),
                         strokeOpacity: .5,
-                        strokeWeight: 1,
+                        strokeWeight: 3,
                     }}
                 />
             </div> 

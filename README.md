@@ -5,3 +5,5 @@ Front end needs to make sure that we can check there is one upper case letter OR
 Finish favorite route feature and offer more statistics on feature seciton
 
 Make sure that user is only populating their specific trips
+
+Add favorite bttn to the trips

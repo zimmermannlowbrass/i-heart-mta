@@ -8,8 +8,6 @@ function NavBar() {
     const {user, setUser} = useContext(UserContext)
 
     function handleSignOut() {
-        console.log('you signed out!')
-
         fetch('/logout', {
             method: 'DELETE'
         })
@@ -18,12 +16,10 @@ function NavBar() {
     return (
         <div>
             <button onClick={() => handleSignOut()}>Sign Out</button>
-            <h1>{user.name}</h1>
-            <NavLink to="/">Profile</NavLink>
+            <NavLink to="/"><h1>{user.name}<br/>♥ MTA</h1></NavLink>
+            <NavLink to="/addtrip"><button>Add a Trip</button></NavLink>
             <br />
-            <NavLink to="/addtrip">Add a Trip</NavLink>
-            <br />
-            <NavLink to='/dashboard'>Dashboard</NavLink>
+            <NavLink to='/dashboard'><button>Dashboard</button></NavLink>
         </div>
     )
 }

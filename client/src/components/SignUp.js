@@ -4,6 +4,9 @@ import { useFormik } from "formik";
 
 import * as Yup from 'yup'
 
+import '../stylesheets/signup.css'
+
+
 function SignUp() {
 
   const [signedUp, setSignedUp] = useState(false)
@@ -55,8 +58,8 @@ function SignUp() {
       )
     }
     return (
-        <div>
-            <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }}>
+        <div className="signup-form">
+            <form onSubmit={formik.handleSubmit}>
               <label htmlFor="name">Full Name</label>
               <br />
               <input

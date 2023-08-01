@@ -70,9 +70,7 @@ function AddTripMap() {
             } 
         })
     }
-    console.log(startId)
-    console.log(endId)
-
+    console.log(start, end, route)
     const handleReset = () => {
         setBorough('')
         setRoute('')

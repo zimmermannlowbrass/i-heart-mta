@@ -50,7 +50,7 @@ export const selectAllSubwayStops = state => state.subwayStops.subwaystops
 export const selectFilteredSubwayStops = (state) => {
     const allSubwayStops = selectAllSubwayStops(state)
     const searchRoute = selectSearchRoute(state)
-    if (!searchRoute) return allSubwayStops
+    // if (!searchRoute) return allSubwayStops
     return allSubwayStops.filter(subwaystop => subwaystop.route === searchRoute)
   }
 
