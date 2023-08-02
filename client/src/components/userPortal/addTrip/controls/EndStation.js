@@ -29,7 +29,7 @@ function EndStation({ route, start, onSetStartId, end, onSetEndId, onSetColor, s
     console.log(subwaystopsOnRoute)
     const station_choices = subwaystopsOnRoute.filter(stationOnRoute => stationOnRoute.stationname.toUpperCase().includes(station.toUpperCase()))
 
-
+    console.log(end)
     const comboboxoptions = station_choices.map(stop => {
         const value = stop.stationname + ' - stop #' + stop.position
         return (
@@ -48,31 +48,32 @@ function EndStation({ route, start, onSetStartId, end, onSetEndId, onSetColor, s
         onSetColor(end.color)
         setStation(e.slice(0 ,(x - 8)))
     }
-    console.log(station)
     return (
         <div>
+            {!direction && "Which direction are you heading?"}
             <Dropdown
                 className="combobox-input" 
                 placeholder="Pick a direction" 
                 options={[{label: start.uptown, value: "uptown"}, {label: start.downtown, value: "downtown"}]} 
                 onChange={e => setDirection(e.value)}
             />
-            <br />
-            {direction && 
+            {(direction && !end) && "Which station are you getting off at?"}
+            {direction && (
                 <Combobox onSelect={(e) => handleSelect(e)}>
                     <ComboboxInput 
                     value={station}
+                    readOnly = {end && true}
                     onChange ={e => setStation(e.target.value)}
                     className="combobox-input"
                     placeholder="end"
                     />
-                    {!end && <ComboboxPopover>
+                    {!end && <ComboboxPopover portal={false}>
                         <ComboboxList className="combobox-list">
                             {comboboxoptions}
                         </ComboboxList>
                     </ComboboxPopover>}
                 </Combobox>
-            }
+            )}
         </div>
     )
 }

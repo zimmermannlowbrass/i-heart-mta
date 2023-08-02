@@ -10,13 +10,13 @@ import FavoriteTrips from "../../../features/favoriteTrips/FavoriteTrips";
 function Dashboard() {
 
     return (
-        <div>
+        <div className="dashboard">
             <NavBar />
-            <NavLink exact to="/dashboard/favoritetrips"><button>Favorite Trips</button></NavLink>
-            <NavLink exact to="/dashboard/pasttrips"><button>All Past Trips</button></NavLink>
-            <NavLink exact to="/dashboard/allsubwaystops"><button>All Subway Stops</button></NavLink>
-            <br />
-            <br />
+            <div className="dashboard-navlinks">
+                <NavLink exact to="/dashboard/favoritetrips"><button>Favorite Trips</button></NavLink>
+                <NavLink exact to="/dashboard/pasttrips"><button>All Past Trips</button></NavLink>
+                <NavLink exact to="/dashboard/allsubwaystops"><button>All Subway Stops</button></NavLink>
+            </div>
             <Switch>
                 <Route exact path="/dashboard/pasttrips">
                     <Trips />

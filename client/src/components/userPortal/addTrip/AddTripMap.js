@@ -23,9 +23,23 @@ function AddTripMap() {
     const [end, setEnd] = useState('')
     const [endId, setEndId] = useState('')
     const [path, setPath] = useState([])
+
+    const startingpoint = () => {switch (user.borough) {
+        case 'Manhattan':
+            return { lat: 40.7826, lng: -73.9656 }
+        case 'Bronx':
+            return { lat: 40.8448, lng: -73.8648 }
+        case 'Brooklyn':
+            break;
+        case 'Queens':
+            return { lat: 40.7282, lng: -73.7949 }
+        default:
+            return { lat: 40.7826, lng: -73.9656 }
+        }
+    }
     
     const mapRef = useRef()
-    const center = useMemo(() => ({ lat: 40.7826, lng: -73.9656 }), [])
+    const center = useMemo(() => (startingpoint()), [])
     const options = useMemo(() => ({
         mapId: "343a9e311a65c41f",
         disableDefaultUI: true,
@@ -99,13 +113,12 @@ function AddTripMap() {
                 />
                 {(start && end) &&
                 <button onClick={fetchDirections}>
-                    Directions
+                    Get Directions
                 </button>}
-
             </div>
             <div className="map" id="map">
                 <GoogleMap 
-                zoom={14}
+                zoom={13}
                 tilt={90}
                 heading={30}
                 center={center} 

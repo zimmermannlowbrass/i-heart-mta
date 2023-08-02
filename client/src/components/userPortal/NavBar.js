@@ -3,20 +3,15 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../context/user";
 
+import "../../stylesheets/navbar.css"
+
 function NavBar() {
 
-    const {user, setUser} = useContext(UserContext)
+    const {user} = useContext(UserContext)
 
-    function handleSignOut() {
-        fetch('/logout', {
-            method: 'DELETE'
-        })
-        .then(setUser(null))
-    }
     return (
         <div>
-            <button onClick={() => handleSignOut()}>Sign Out</button>
-            <NavLink to="/"><h1>{user.name}<br/>♥ MTA</h1></NavLink>
+            <NavLink to="/"><h1 className="username-navlink">{user.name}<br/>I ♥ MTA</h1></NavLink>
             <NavLink to="/addtrip"><button>Add a Trip</button></NavLink>
             <br />
             <NavLink to='/dashboard'><button>Dashboard</button></NavLink>

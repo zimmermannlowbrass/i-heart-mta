@@ -22,6 +22,19 @@ a {
 header {
   font-size: 36pt;
   font-weight: 900;
+  animation: neon 3s ease infinite;
+}
+
+@keyframes neon {
+  0%,
+  100% {
+      text-shadow: 0 0 10px #ef00e3a8, 0 0 20px #ef00e3a8, 0 0 20px #ef00e3a8, 0 0 20px #ef00e3a8, 0 0 2px #fed128, 2px 2px 2px #806914;
+      color:  rgb(239, 204, 222);
+  }
+  50% {
+      text-shadow: 0 0 2px #800e0b, 0 0 5px #800e0b, 0 0 5px #800e0b, 0 0 5px #800e0b, 0 0 2px #800e0b, 4px 4px 2px #40340a;
+      color: rgb(249, 137, 193);
+  }
 }
 
 .test {
@@ -90,10 +103,25 @@ button {
   color: black;
   font-weight: 700;
   font-size: medium;
+  margin: 5px;
+  border: thick groove white;
 }
 
 button:hover {
   background-color: black;
   color: hotpink;
+  transform: scale(1.1);
+}
+
+.show-trips {
+  font-size: 30pt;
+  border-radius: 90%;
+  color: black;
+  background-color: rgb(158, 243, 215);
+}
+
+.show-trips:hover {
+  background-color: black;
+  color: rgb(158, 243, 215);
   transform: scale(1.1);
 }

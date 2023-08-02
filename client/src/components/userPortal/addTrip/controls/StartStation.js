@@ -36,22 +36,21 @@ function StartStation({start, onSetStart, borough, setPosition }) {
 
     return (
         <div>
-            <br />
+            {!start && "Which station did you start your trip at?"}
             <Combobox onSelect={(e) => handleSelect(e)}>
                 <ComboboxInput 
                 value={station}
                 readOnly = {start && true}
                 onChange ={e => setStation(e.target.value)}
                 className="combobox-input"
-                placeholder="start"
+                placeholder='example: "72 St"'
                 />
-                {!start && <ComboboxPopover>
+                {!start && <ComboboxPopover portal={false} >
                     <ComboboxList className="combobox-list">
                         {station_choices_mapped}
                     </ComboboxList>
                 </ComboboxPopover>}
             </Combobox>
-            < br />
         </div>
     )
 

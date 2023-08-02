@@ -28,9 +28,9 @@ function Trips() {
         const distance = Math.abs(trip.start.position - trip.stop.position)
         return (
             <div className="pastTripContainer" key={userTrips.indexOf(trip)}>
-                <h5>Start: {trip.start.stationname}</h5>
-                <h5>Stations traveled: {distance}</h5>
-                <h5>End: {trip.stop.stationname}</h5>
+                <h3>Start: {trip.start.stationname}</h3>
+                <h3>End: {trip.stop.stationname}</h3>
+                <h3>Total Stations Traveled: {distance}</h3>
                 <button onClick={() => onAddTripToFavorites(trip)}>Add to Favorites</button>
                 <button onClick={() => onDeleteTrip(trip.id)}>Delete Trip</button>
             </div>

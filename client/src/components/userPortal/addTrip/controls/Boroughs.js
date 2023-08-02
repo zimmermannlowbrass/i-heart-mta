@@ -27,10 +27,10 @@ function Boroughs({ borough, onSetBorough}) {
 
     return (
         <div className="boroughDropdown">
+            {!borough && 'Which Borough did you start at?'}
             <Dropdown
             value={borough} 
             className="combobox-input" 
-            placeholder="Pick a borough" 
             disabled={borough && true}
             options={!borough && boroughs}
             onChange={(e) => handleSelect(e.value)}

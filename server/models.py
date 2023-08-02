@@ -44,6 +44,12 @@ class User(db.Model, SerializerMixin):
         if (borough not in ['Manhattan', 'Brooklyn', 'Bronx', 'Queens']):
             raise ValueError('Borough must be either Manhattan, Brooklyn, Bronx, or Queens. NO STATEN ISLAND.')
         return borough
+    
+    @validates('username')
+    def validate_name(self, key, username):
+        if (self.name == username):
+            raise ValueError('Username must be different than name.')
+        return username
 
     def __repr__(self):
         return f'<User>{self.name}'

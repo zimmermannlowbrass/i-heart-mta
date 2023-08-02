@@ -64,8 +64,7 @@ function ShowPastTrips() {
     })
     useMemo(() => {
         makePolylines()
-    }, [trips])
-    console.log('rerender')
+    },  [trips])
     return (
         <div>
             {polylines}

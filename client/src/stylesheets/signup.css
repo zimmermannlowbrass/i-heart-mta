@@ -7,3 +7,18 @@
     font-weight: bolder;
     box-shadow: 9px 9px 19px 10px rgba(255, 113, 255, 0.99),-10px -10px 20px 10px rgba(255, 113, 255, 1);
 }
+
+.signedup-success {
+    font-style: italic;
+    animation: waviy 1s infinite;
+    animation-delay: calc(.1s * var(--i));
+}
+
+@keyframes waviy {
+    0%,40%,100% {
+      transform: translateY(0)
+    }
+    40% {
+      transform: translateY(-40px)
+    }
+  }

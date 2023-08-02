@@ -11,10 +11,12 @@ function SignUp() {
 
   const [signedUp, setSignedUp] = useState(false)
   const [passwordAlert, setPasswordAlert] = useState(false)
+  const [showPasword, setShowPassword] = useState(false)
+  const [showPaswordConfirm, setShowPasswordConfirm] = useState(false)
 
   const formSchema = Yup.object().shape({
       name: Yup.string().required("Name is required.").max(30),
-      username: Yup.string().required("Username is required.").min(6),
+      username: Yup.string().notOneOf([Yup.ref('name'), null], 'Username should be different than your name.').required("Username is required.").min(6),
       password: Yup.string().required("Password is required.").min(8, "Password is too short - should be 8 chars minimum"),
       borough: Yup.string().required("Borough is required."),
       confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], "Passwords don't match!").required("Please confirm your password.")
@@ -56,7 +58,7 @@ function SignUp() {
     })
   if (signedUp) {
     return (
-      <h4>You have successfully signed up! Go ahead and sign in to get started</h4>
+      <h3 className="signedup-success">You have successfully signed up! Go ahead and sign in to get started!</h3>
     )
   }
   return (
@@ -75,7 +77,7 @@ function SignUp() {
           <br />
           <input
           type="radio"
-          id="borough"
+          id="Manhattan"
           name="borough"
           onChange={formik.handleChange}
           value='Manhattan'
@@ -83,7 +85,7 @@ function SignUp() {
           Manhattan
           <input
           type="radio"
-          id="borough"
+          id="Brooklyn"
           name="borough"
           onChange={formik.handleChange}
           value='Brooklyn'
@@ -91,7 +93,7 @@ function SignUp() {
           Brooklyn
           <input
           type="radio"
-          id="borough"
+          id="Bronx"
           name="borough"
           onChange={formik.handleChange}
           value='Bronx'
@@ -99,7 +101,7 @@ function SignUp() {
           Bronx
           <input
           type="radio"
-          id="borough"
+          id="Queens"
           name="borough"
           onChange={formik.handleChange}
           value='Queens'
@@ -118,28 +120,35 @@ function SignUp() {
           <label htmlFor="password">Password</label>
           <br />
           <input
+          type={showPasword ? null : "password"}
           id="password"
           name="password"
           onChange={formik.handleChange}
           value={formik.values.password}
           />
+          <button type="button" onClick={() =>setShowPassword(!showPasword)}>
+              {showPasword ? "hide" : "show"}
+          </button>
           <p style={{ color: "red" }}> {formik.errors.password}</p>
           <label htmlFor="confirmPassword">Confirm Password</label>
           <br />
           <input
+          type={showPaswordConfirm ? null : "password"}
           id="confirmPassword"
           name="confirmPassword"
           onChange={formik.handleChange}
           value={formik.values.confirmPassword}
           />
+          <button type="button" onClick={() =>setShowPasswordConfirm(!showPaswordConfirm)}>
+              {showPaswordConfirm ? "hide" : "show"}
+          </button>
           <p style={{ color: "red" }}> {formik.errors.confirmPassword}</p>
           <button type="submit">Submit</button>
       </form>
       <br />
       <br />
-      {passwordAlert && <h4 style={{color: 'red'}}>DOUBLE CHECK YOUR PASSWORD</h4>}
+      {passwordAlert && <h4 style={{color: 'red'}}>PASSWORD INSUFFICIENT</h4>}
       <h4>Passwords must be at least 8 characters and contain one number</h4>
-
     </div>
   )
 }

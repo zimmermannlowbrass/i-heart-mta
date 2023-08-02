@@ -5,16 +5,16 @@ import EndStation from "./EndStation";
 import Boroughs from "./Boroughs";
 import Routes from "./Routes";
 
+import "../../../../stylesheets/controls.css"
+
 function Controls({ start, onSetStart, onSetStartId, end, onSetEnd, onSetEndId, mapRef, onSetColor, borough, onSetBorough, route, onSetRoute, onReset}) {
 
     return (
-        <div>
-            <button onClick={onReset}>Reset</button>
+        <div className="addTripContols">
             <Boroughs
             borough = {borough} 
             onSetBorough = {onSetBorough}
             />
-
             {borough && 
             <StartStation
                 start={start}
@@ -41,6 +41,7 @@ function Controls({ start, onSetStart, onSetStartId, end, onSetEnd, onSetEndId, 
                     mapRef.current.panTo(station)}
                 }
             />}
+            <button onClick={onReset}>Reset</button>
         </div>
     )
 }
