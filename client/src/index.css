@@ -19,6 +19,11 @@ a {
   box-sizing: border-box;
 }
 
+header {
+  font-size: 36pt;
+  font-weight: 900;
+}
+
 .test {
   float: left;
   width: 20%;

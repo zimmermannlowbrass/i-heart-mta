@@ -20,6 +20,8 @@ function Boroughs({ borough, onSetBorough}) {
             case 'Queens':
                 onSetBorough('Q')
                 break
+            default:
+                return
         }
     }
 

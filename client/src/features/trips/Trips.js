@@ -4,6 +4,7 @@ import { UserContext } from "../../context/user.js";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { selectTrips, loadTrips, deleteTrip } from "./tripsSlice.js"
+import { addTrip } from "../favoriteTrips/favoriteTripsSlice.js";
 
 
 function Trips() {
@@ -18,6 +19,10 @@ function Trips() {
     function onDeleteTrip(id) {
         dispatch(deleteTrip(id))
     }
+    function onAddTripToFavorites(trip) {
+        dispatch(addTrip(trip))
+    }
+
     const userTrips = trips.filter(trip => trip.user_id === user.id)
     const tripList = userTrips.map(trip => {
         const distance = Math.abs(trip.start.position - trip.stop.position)
@@ -26,6 +31,7 @@ function Trips() {
                 <h5>Start: {trip.start.stationname}</h5>
                 <h5>Stations traveled: {distance}</h5>
                 <h5>End: {trip.stop.stationname}</h5>
+                <button onClick={() => onAddTripToFavorites(trip)}>Add to Favorites</button>
                 <button onClick={() => onDeleteTrip(trip.id)}>Delete Trip</button>
             </div>
         )

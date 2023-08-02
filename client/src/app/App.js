@@ -11,7 +11,6 @@ import Welcome from '../components/Welcome';
 function App() {
   const {user} = useContext(UserContext)
 
-  console.log(user)
   if (user) {
     return (
       <Welcome/>
@@ -19,7 +18,7 @@ function App() {
   }
   return (
     <div>
-        <h1>I ♥ MTA</h1>
+        <header>I ♥ MTA<br/>"The Best App for The Best Subway"</header>
         <br />
         <NavLink exact to="/signin">
           <button>Sign In</button>
@@ -27,6 +26,7 @@ function App() {
         <NavLink exact to="/signup">
           <button>New Member</button>
         </NavLink>
+        <br />
         <br />
         <br />
         <Switch>

@@ -3,5 +3,7 @@
     display: inline-block;
     padding: 5px;
     background-color: rgb(37, 37, 37);
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    font-size: larger;
+    font-weight: bolder;
+    box-shadow: 9px 9px 19px 10px rgba(255, 113, 255, 0.99),-10px -10px 20px 10px rgba(255, 113, 255, 1);
 }

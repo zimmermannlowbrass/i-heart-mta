@@ -12,6 +12,7 @@ function SignIn() {
   const {setUser} = useContext(UserContext)
   const history = useHistory()
   const [showPasword, setShowPassword] = useState(false)
+  const [signInAlert, setSignInAlert] = useState('')
   const formik = useFormik({
       initialValues: {
         username:"",
@@ -33,7 +34,7 @@ function SignIn() {
                   history.push('/')
                 })
               } else {
-                r.json().then(err => console.log(err['error']))
+                r.json().then(err => setSignInAlert(err['error']))
               }
             })
       }
@@ -65,6 +66,7 @@ function SignIn() {
             <br />
             <button style={{alignItems: 'center'}} type="submit">Sign In</button>
           </form>
+          {signInAlert}
       </div>
   )
 }

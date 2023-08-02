@@ -12,8 +12,7 @@ class User(db.Model, SerializerMixin):
     serialize_rules = ('-trips.user', '-_password_hash')
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
+    username = db.Column(db.String, unique=True, nullable=False)
     borough = db.Column(db.String)
     name = db.Column(db.String)
     _password_hash = db.Column(db.String)
@@ -34,18 +33,17 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
     
-    @validates('password')
-    def validate_password(self, key, password):
-        if (len(password) < 8):
-            raise ValueError('Passwords must be at least 8 characters in length.')
-        if (password == password.lower()):
-            raise ValueError('Passwords must have at least one uppercase letter.')
-        if (password == password.upper()):
-            raise ValueError('Passwords must have at least one lowercase letter.')
-        has_digit = any(char.isdigit() for char in password)
-        if not has_digit:
-            raise ValueError('Password must contain at least one number.')
-        return password
+    @validates('name')
+    def validate_name(self, key, name):
+        if (len(name) > 30):
+            raise ValueError('Name field cannot be longer than 30 characters.')
+        return name
+    
+    @validates('borough')
+    def validate_name(self, key, borough):
+        if (borough not in ['Manhattan', 'Brooklyn', 'Bronx', 'Queens']):
+            raise ValueError('Borough must be either Manhattan, Brooklyn, Bronx, or Queens. NO STATEN ISLAND.')
+        return borough
 
     def __repr__(self):
         return f'<User>{self.name}'

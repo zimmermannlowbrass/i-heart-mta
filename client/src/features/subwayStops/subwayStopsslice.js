@@ -55,5 +55,4 @@ export const selectFilteredSubwayStops = (state) => {
   }
 
 
-
 export default subwayStopSlice.reducer

@@ -22,16 +22,26 @@ class Users(Resource):
     def post(self):
         data = request.get_json()
 
+
         new_user = User(
             username=data['username'],
-            password=data['password'],
-            name=data['name']
+            name=data['name'],
+            borough=data['borough']
         )
-        new_user.password_hash = new_user.password
+        new_user.password_hash = data['password']
         db.session.add(new_user)
         db.session.commit()
 
         return make_response(new_user.to_dict(), 201)
+    
+    def delete(self):
+        db.session.query(User).delete()
+        db.session.commit()
+
+        message_dict = {"message": "successful deletion of all users!"}
+
+        return make_response(message_dict, 200)
+
 
 class Users_by_ID(Resource):
 
@@ -79,7 +89,7 @@ class Login(Resource):
                 return response
             return {'error': 'Incorrect password. Double check and try again!'}, 401
 
-        return {'error': 'Unauthorized Email. Double check and try again!'}, 401
+        return {'error': 'Unauthorized Username. Double check and try again!'}, 401
 
 class CheckSession(Resource):
     def get(self):
@@ -90,7 +100,7 @@ class CheckSession(Resource):
 class Logout(Resource):
     def delete(self):
         session['user_id'] = None
-        return {'message': '204: No Content'}, 204
+        return make_response({'message': '204: No Content'}, 204)
 
 class Stations(Resource):
 
@@ -130,7 +140,7 @@ class Trips(Resource):
         db.session.query(Trip).delete()
         db.session.commit()
 
-        return {"message": "successful deletion of all trips!"}, 204
+        return make_response({"message": "successful deletion of all trips!"}, 200)
     
 class Trip_by_ID(Resource):
 
@@ -138,12 +148,25 @@ class Trip_by_ID(Resource):
         trip = Trip.query.filter(Trip.id == id).first()
         return make_response(trip.to_dict(), 200)
     
+    def patch(self, id):
+        data = request.get_json()
+        trip = Trip.query.filter(Trip.id == id).first()
+        for attr in data:
+            setattr(trip, attr, data[attr])
+        db.session.add(trip)
+        db.session.commit()
+        response = make_response(
+            jsonify(trip.to_dict()),
+            200
+        )
+        return response
+
     def delete(self, id):
         trip = Trip.query.filter(Trip.id == id).first()
         db.session.delete(trip)
         db.session.commit()
 
-        return {"message": "successful deletion of trip!"}, 204
+        return make_response({"message": "successful deletion of trip!"}, 200)
 
 
 

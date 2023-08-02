@@ -8,8 +8,10 @@ import {
 } from "./subwayStopsSlice";
 import SearchRoute from "../searchRoute/SearchRoute";
 
+import "../../stylesheets/subwaystop.css"
 
 function SubwayStops() {
+
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(loadSubwayStops());
@@ -18,9 +20,9 @@ function SubwayStops() {
     const filteredStops = useSelector(selectFilteredSubwayStops)
     const subwayStopList = filteredStops.map(subwaystop => {
         return (
-            <ul key={subwayStops.indexOf(subwaystop)}>
+            <li key={subwayStops.indexOf(subwaystop)}>
                 {subwaystop.stationname}
-            </ul>
+            </li>
         )
     })
 
@@ -28,7 +30,9 @@ function SubwayStops() {
         <div>
             <h1>SubwayStops</h1>
             <SearchRoute />
-            {subwayStopList}
+            <ol>
+                {subwayStopList}
+            </ol>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import tripsSliceReducer from '../features/trips/tripsSlice'
 import searchRouteReducer from '../features/searchRoute/searchRouteSlice'
 import subwayStopSliceReducer from '../features/subwayStops/subwayStopsSlice'
-import favoriteTripsSliceReducer from '../features/favoriteTrips/favoriteRoutesSlice'
+import favoriteTripsSliceReducer from '../features/favoriteTrips/favoriteTripsSlice'
 
 const reducers = {
     trips: tripsSliceReducer,
@@ -10,7 +10,6 @@ const reducers = {
     subwayStops: subwayStopSliceReducer ,
     favoriteTrips: favoriteTripsSliceReducer
 }
-console.log(reducers)
 
 const rootReducer = combineReducers(reducers)
 export const store = configureStore({ reducer: rootReducer})
