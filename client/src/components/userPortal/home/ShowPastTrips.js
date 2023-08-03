@@ -6,19 +6,11 @@ import {
     Polyline
 } from "@react-google-maps/api"
 
-function ShowPastTrips() {
+function ShowPastTrips({ userTrips }) {
 
     const {user} = useContext(UserContext)
-    const [trips, setTrips] = useState([])
     const [polylineDicts, setPolylineDicts] = useState([])
 
-    useEffect(() => {
-        fetch("/trips")
-        .then(r => r.json())
-        .then(setTrips)
-    }, [])
-
-    const userTrips = trips.filter(trip => trip.user_id === user.id)
     const makePolylines = () => {
         for (let i = 0; userTrips.length > i; i++) {
             const service = new window.google.maps.DirectionsService()
@@ -56,7 +48,7 @@ function ShowPastTrips() {
                     options={{
                         strokeColor: Object.keys(polylineDict),
                         strokeOpacity: .5,
-                        strokeWeight: 3,
+                        strokeWeight: 5,
                     }}
                 />
             </div> 
@@ -64,7 +56,7 @@ function ShowPastTrips() {
     })
     useMemo(() => {
         makePolylines()
-    },  [trips])
+    },  [])
     return (
         <div>
             {polylines}

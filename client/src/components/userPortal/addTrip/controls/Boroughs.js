@@ -1,9 +1,13 @@
 import React from "react";
+import { useContext } from "react";
+
 import Dropdown from 'react-dropdown';
-
-
+import { UserContext } from "../../../../context/user";
 
 function Boroughs({ borough, onSetBorough}) {
+
+    const {user} = useContext(UserContext)
+    console.log(user.borough)
 
     const boroughs = ['Manhattan', 'Brooklyn', 'Bronx', 'Queens']
     function handleSelect(borough) {

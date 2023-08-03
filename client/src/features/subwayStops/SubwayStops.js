@@ -14,8 +14,8 @@ function SubwayStops() {
 
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(loadSubwayStops());
-      }, [dispatch]);
+        dispatch(loadSubwayStops())
+      }, [dispatch])
     const subwayStops = useSelector(selectAllSubwayStops)
     const filteredStops = useSelector(selectFilteredSubwayStops)
     const subwayStopList = filteredStops.map(subwaystop => {
@@ -25,11 +25,13 @@ function SubwayStops() {
             </li>
         )
     })
+    const subwayRoutes = ['1','2','3','4','5','6','7','A','C', 'E', 'B', 'D','F','M','N','Q','R','W','J','Z','L','S','G']
+
 
     return (
         <div>
             <h1>SubwayStops</h1>
-            <SearchRoute />
+            <SearchRoute subwayRoutes={subwayRoutes}/>
             <ol>
                 {subwayStopList}
             </ol>

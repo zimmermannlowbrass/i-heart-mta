@@ -23,7 +23,8 @@ function FavoriteTrips() {
     const tripList = userFavTrips.map(trip => {
         const distance = Math.abs(trip.start.position - trip.stop.position)
         return (
-            <div className="pastTripContainer" style={{color: 'black',backgroundColor: 'lightslategrey'}} key={userFavTrips.indexOf(trip)}>
+            <div className="pastTripContainer" style={{color: 'black',backgroundColor: 'slategrey'}} key={userFavTrips.indexOf(trip)}>
+                <h2 style={{backgroundColor: trip.start.color}}>{trip.start.route} Train</h2>
                 <h3>Start: {trip.start.stationname}</h3>
                 <h3>End: {trip.stop.stationname}</h3>
                 <h3>Total Stations Traveled: {distance}</h3>

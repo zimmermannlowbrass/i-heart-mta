@@ -21,8 +21,6 @@ class Users(Resource):
     
     def post(self):
         data = request.get_json()
-
-
         new_user = User(
             username=data['username'],
             name=data['name'],

@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSearchRoute, setSearchRoute } from "./searchRouteSlice";
 
-function SearchRoute() {
+function SearchRoute({ subwayRoutes }) {
 
     const dispatch = useDispatch()
     const currentRoute = useSelector(selectSearchRoute)
@@ -11,7 +11,6 @@ function SearchRoute() {
         dispatch(setSearchRoute(value))
     }
 
-    const subwayRoutes = ['1','2','3','4','5','6','7','A','C', 'E', 'B', 'D','F','M','N','Q','R','W','J','Z','L','S','G']
     const routeButtons = subwayRoutes.map(route => {
         const color = route === currentRoute ? 'hotpink' : null
         const background = route === currentRoute ? 'black' : null

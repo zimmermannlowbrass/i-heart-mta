@@ -1,10 +1,15 @@
 ol {
     font-weight: bold; 
-    display: inline-block; 
-    list-style-type: circle;
+    display: inline-table; 
+    list-style-type: disclosure-closed;
 }
 
 li {
+    border-color: hotpink;
+    background-color: black;
+    width: fit-content;
+    border-style: double;
     margin: 15px;
     text-align: left;
+    font-size: large;
 }

@@ -4,6 +4,7 @@ body {
   padding: 0;
   height: 100%;
   margin: 0;
+  background-image: url("https://images.squarespace-cdn.com/content/v1/5b1d2b1d89c172a5020826d6/1537871569487-EDT1VP9FPXIAHQDI0H5N/site_background.png?format=2500w");
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     color: hotpink;
@@ -86,10 +87,13 @@ header {
   color: hotpink;
   padding: 0.5rem;
   background-color: black;
+  margin: 2px;
 }
 
 .pastTripContainer {
-  background-color: rgb(71, 71, 71);
+  background-color: black;
+  border-color: hotpink;
+  border-style: double;
   width: fit-content;
   display: inline-block;
   padding: 5px;
@@ -114,14 +118,14 @@ button:hover {
 }
 
 .show-trips {
-  font-size: 30pt;
+  font-size: 20pt;
   border-radius: 90%;
   color: black;
-  background-color: rgb(158, 243, 215);
+  background-color: rgb(233, 10, 229);
 }
 
 .show-trips:hover {
   background-color: black;
-  color: rgb(158, 243, 215);
+  color: rgb(233, 10, 229);
   transform: scale(1.1);
 }

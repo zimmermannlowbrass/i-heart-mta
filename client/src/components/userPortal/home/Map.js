@@ -1,17 +1,28 @@
 import React from "react";
-import { useMemo, useCallback, useRef, useState, useContext } from "react";
+import { useMemo, useCallback, useRef, useState, useEffect, useContext } from "react";
 import ShowPastTrips from "./ShowPastTrips";
 import {
     GoogleMap
 } from "@react-google-maps/api"
 import NavBar from "../NavBar";
-import { UserContext } from "../../../context/user";
 import "../../../stylesheets/home.css"
+
+import { UserContext } from "../../../context/user";
+
 function Map() {
 
-    const {setUser} = useContext(UserContext)
+    const {user, setUser} = useContext(UserContext)
+    const [trips, setTrips] = useState([])
+
+
+    useEffect(() => {
+        fetch("/trips")
+        .then(r => r.json())
+        .then(setTrips)
+    }, [])
+    const userTrips = trips.filter(trip => trip.user_id === user.id)
     
-    const [active, setActive] = useState(false)
+    const [revealTrips, setRevealTrips] = useState(false)
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7, lng: -73.9 }), [])
     const options = useMemo(() => ({
@@ -37,7 +48,11 @@ function Map() {
             <div className="controls">
                 <NavBar />
                 <div className="profile-home">
-                    <button className="show-trips" onClick={() => setActive(!active)}>Past Trips</button>
+                    <h1>Profile</h1>
+                    <h3>Name:<br />{user.name}</h3>
+                    <h3>Borough:<br />{user.borough}</h3>
+                    <h3>Trips Taken:<br />{userTrips.length}</h3>
+                    <button className="show-trips" onClick={() => setRevealTrips(!revealTrips)}>Past Trips</button>
                     <button onClick={() => handleSignOut()}>Sign Out</button>
                 </div>
             </div>
@@ -51,7 +66,7 @@ function Map() {
                 options={options}
                 onLoad={onLoad}
                 >
-                    {active && <ShowPastTrips />}
+                    {revealTrips && <ShowPastTrips userTrips={userTrips}/>}
                 </GoogleMap>
             </div>
         </div>

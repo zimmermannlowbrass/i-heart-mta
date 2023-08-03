@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback, useRef, useContext } from "react";
 import {
     GoogleMap,
     Marker,
-    Polyline
+    Polyline,
 } from "@react-google-maps/api"
 
 import Controls from "./controls/Controls";
@@ -23,6 +23,7 @@ function AddTripMap() {
     const [end, setEnd] = useState('')
     const [endId, setEndId] = useState('')
     const [path, setPath] = useState([])
+    const [revealControls, setRevealControls] = useState(true)
 
     const startingpoint = () => {switch (user.borough) {
         case 'Manhattan':
@@ -81,6 +82,7 @@ function AddTripMap() {
                   setPath(path => [...path, {lat: overview_path[i].lat(), lng: overview_path[i].lng()}])
                 }
                 handleReset()
+                setRevealControls(false)
             } 
         })
     }
@@ -96,7 +98,8 @@ function AddTripMap() {
         <div className="continer">
             <div className="controls">
                 <NavBar />
-                <Controls 
+                {revealControls 
+                ?<Controls 
                     start = {start}
                     onSetStart = {setStart}
                     onSetStartId = {setStartId}
@@ -109,8 +112,12 @@ function AddTripMap() {
                     onSetBorough={setBorough}
                     route={route}
                     onSetRoute={setRoute}
-                    onReset={handleReset}
-                />
+                    onReset={handleReset}/>
+                : <div>
+                    <h1>Trip has been added!!</h1>
+                    <button onClick={() => setRevealControls(true)}>Add another trip?</button>
+                </div>
+                }
                 {(start && end) &&
                 <button onClick={fetchDirections}>
                     Get Directions
