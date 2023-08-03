@@ -19,12 +19,15 @@ class Users(Resource):
         users_serialized = [user.to_dict() for user in users]
         return make_response(users_serialized, 200)
     
+    # ADD A PATCH HERE
+    
     def post(self):
         data = request.get_json()
         new_user = User(
             username=data['username'],
             name=data['name'],
-            borough=data['borough']
+            borough=data['borough'],
+            role=data['role']
         )
         new_user.password_hash = data['password']
         db.session.add(new_user)

@@ -13,8 +13,7 @@ function Map() {
 
     const {user, setUser} = useContext(UserContext)
     const [trips, setTrips] = useState([])
-
-
+    const [revealTrips, setRevealTrips] = useState(false)
     useEffect(() => {
         fetch("/trips")
         .then(r => r.json())
@@ -22,7 +21,6 @@ function Map() {
     }, [])
     const userTrips = trips.filter(trip => trip.user_id === user.id)
     
-    const [revealTrips, setRevealTrips] = useState(false)
     const mapRef = useRef()
     const center = useMemo(() => ({ lat: 40.7, lng: -73.9 }), [])
     const options = useMemo(() => ({
@@ -48,11 +46,12 @@ function Map() {
             <div className="controls">
                 <NavBar />
                 <div className="profile-home">
+                    <button className="show-trips" onClick={() => setRevealTrips(!revealTrips)}>{revealTrips ? 'Hide' : 'Show'}<br/>Past Trips</button>
                     <h1>Profile</h1>
                     <h3>Name:<br />{user.name}</h3>
-                    <h3>Borough:<br />{user.borough}</h3>
-                    <h3>Trips Taken:<br />{userTrips.length}</h3>
-                    <button className="show-trips" onClick={() => setRevealTrips(!revealTrips)}>Past Trips</button>
+                    <h3>Occupation:<br/>{user.role ? user.role : 'n/a'}</h3>
+                    <h3>Borough:<br/>{user.borough}</h3>
+                    <h3>Trips Taken:<br/>{userTrips.length}</h3>
                     <button onClick={() => handleSignOut()}>Sign Out</button>
                 </div>
             </div>

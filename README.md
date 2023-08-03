@@ -1,6 +1,6 @@
 Front End:
+- Need a patch for profile
 - In Past Trips in dashboard, offer a filter option
-- Add animation to when a user adds a trip
 - More animation in texts and boxs
 
 Back End:

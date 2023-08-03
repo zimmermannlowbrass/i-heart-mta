@@ -1,6 +1,5 @@
 import React from "react";
-import { useEffect, useState, useMemo, useContext } from "react";
-import { UserContext } from "../../../context/user";
+import { useState, useMemo } from "react";
 
 import {
     Polyline
@@ -8,7 +7,6 @@ import {
 
 function ShowPastTrips({ userTrips }) {
 
-    const {user} = useContext(UserContext)
     const [polylineDicts, setPolylineDicts] = useState([])
 
     const makePolylines = () => {
@@ -48,7 +46,7 @@ function ShowPastTrips({ userTrips }) {
                     options={{
                         strokeColor: Object.keys(polylineDict),
                         strokeOpacity: .5,
-                        strokeWeight: 5,
+                        strokeWeight: 3,
                     }}
                 />
             </div> 

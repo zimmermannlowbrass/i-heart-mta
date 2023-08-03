@@ -29,7 +29,7 @@ function SearchRoute({ subwayRoutes }) {
         <div>
             {routeButtons}
             <br />
-            <button onClick={() => onFilterSubwayRoute(null)}>Reset</button>
+            <button onClick={() => onFilterSubwayRoute(null)}>Clear</button>
         </div>
     )
 }

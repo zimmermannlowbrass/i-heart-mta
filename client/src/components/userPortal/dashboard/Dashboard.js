@@ -13,6 +13,7 @@ function Dashboard() {
     return (
         <div className="dashboard">
             <NavBar />
+            <h1>Dashboard</h1>
             <div className="dashboard-navlinks">
                 <NavLink exact to="/dashboard/favoritetrips"><button>Favorite Trips</button></NavLink>
                 <NavLink exact to="/dashboard/pasttrips"><button>Past Trips</button></NavLink>

@@ -14,6 +14,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     borough = db.Column(db.String)
+    role = db.Column(db.String)
     name = db.Column(db.String)
     _password_hash = db.Column(db.String)
 
@@ -61,7 +62,6 @@ class Trip(db.Model, SerializerMixin):
     serialize_rules = ('-subwaystops.station', '-start.start', '-stop.stop', '-user.trips')
 
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String)
     isFavorite = db.Column(db.Boolean)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))    

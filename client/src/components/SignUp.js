@@ -39,7 +39,8 @@ function SignUp() {
         name:"",
         password:"",
         confirmPassword:"",
-        borough:""
+        borough:"",
+        role:""
       },
       validationSchema: formSchema,
       onSubmit: (values) => {
@@ -69,6 +70,7 @@ function SignUp() {
           <input
           id="name"
           name="name"
+          placeholder="ex.John Doe"
           onChange={formik.handleChange}
           value={formik.values.name}
           />
@@ -113,10 +115,20 @@ function SignUp() {
           <input
           id="username"
           username="username"
+          placeholder="ex. UserName99"
           onChange={formik.handleChange}
           value={formik.values.username}
           />
           <p style={{ color: "red" }}> {formik.errors.username}</p>
+          <label htmlFor="role">Occupation</label>
+          <br />
+          <input
+          id="role"
+          placeholder="ex. Student"
+          username="role"
+          onChange={formik.handleChange}
+          value={formik.values.role}
+          />
           <label htmlFor="password">Password</label>
           <br />
           <input
