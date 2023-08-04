@@ -39,7 +39,7 @@ def color_of_subway_route(subway):
     elif subway in ['J','Z']:
         return 'Brown'
     elif subway in ['L','S']:
-        return 'Grey'
+        return 'White'
     elif subway == 'G':
         return 'Lime'
     

@@ -7,6 +7,7 @@ import { NavLink, Route, Switch } from "react-router-dom";
 
 import { UserContext } from "../context/user";
 import Welcome from '../components/Welcome';
+import Video from './video/Video';
 
 function App() {
   const {user} = useContext(UserContext)
@@ -35,6 +36,11 @@ function App() {
           </Route>
           <Route exact path="/signUp">
             <SignUp />
+          </Route>
+          <Route exact path="/">
+            <div>
+              <Video />
+            </div>
           </Route>
         </Switch>
     </div>

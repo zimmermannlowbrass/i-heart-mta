@@ -1,5 +1,11 @@
+<video loop={true} muted={true} autoPlay={true} width="700" height="700"  >
+    <source src="./client/src/app/video/Demo.mp4" type="video/mp4"/>
+</video>
+
 #  I :heart: MTA
-*I :heart: MTA APP is a full-stack application that implements a FLask-SQLAlchemy backend and a React-Redux frontend.*
+*I :heart: MTA APP is a full-stack application* 
+*React-Redux frontend*
+*FLask-SQLAlchemy backend*
 
 ### External API's and other data used
 For this project, I used Google Maps API key as well as MTA's API key. Google maps provided the map which acts as a canvas for the subway trip drawings. As well, Google provided the necessary direction rendering for the subway trip. This direction rendering  provided a list of latitude/longitude direction coordinates that was used to draw polylines with colors cooresponding to the train color. The MTA provided necessary subwaystop information, including information on over 700 subwaystops (names, lat/lng directions, descriptions, transfer routes). Unfortunately, the MTA did not provide a ordered list of subway stops for each subway route. To get this last piece of information, I had to scrape the MTA's website and use beautiful soup to compile a ordered list from uptown to downtown of every subwaystop station.
@@ -38,7 +44,7 @@ In this section, a user can see all the subway routes and all of their station s
 
 --- TODO --- 
 Front End:
-- In Past Trips in dashboard, offer a filter option
+In Past Trips in dashboard, offer a filter option
 
 Back End:
 Check and make sure that there are not other usernames with same username
