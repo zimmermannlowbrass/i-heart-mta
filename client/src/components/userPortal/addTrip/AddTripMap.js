@@ -124,7 +124,7 @@ function AddTripMap() {
                 }
                 {(start && end) &&
                 <button className="show-trips" onClick={fetchDirections}>
-                    Get Directions
+                    Add Trip
                 </button>}
             </div>
             <div className="map" id="map">
