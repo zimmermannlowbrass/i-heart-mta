@@ -1,6 +1,4 @@
-<video loop={true} muted={true} autoPlay={true} width="700" height="700"  >
-    <source src="./client/src/app/video/Demo.mp4" type="video/mp4"/>
-</video>
+![demo](https://media.giphy.com/media/wVtdPu5CB1YJO4fY6J/giphy.gif)
 
 #  I :heart: MTA
 *I :heart: MTA APP is a full-stack application* 
