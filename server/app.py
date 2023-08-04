@@ -18,9 +18,7 @@ class Users(Resource):
         users = User.query.all()
         users_serialized = [user.to_dict() for user in users]
         return make_response(users_serialized, 200)
-    
-    # ADD A PATCH HERE
-    
+        
     def post(self):
         data = request.get_json()
         new_user = User(
@@ -50,12 +48,39 @@ class Users_by_ID(Resource):
         user = User.query.filter(User.id == id).first()
         return make_response(user.to_dict(), 200)
     
+    def patch(self, id):
+        data = request.get_json()
+        user = User.query.filter(User.id == id).first()
+        for attr in data:
+            setattr(user, attr, data[attr])
+        db.session.add(user)
+        db.session.commit()
+        return make_response(user.to_dict(), 200)
+
+    
     def delete(self, id):
         user = User.query.filter(User.id == id).first()
         db.session.delete(user)
         db.session.commit()
 
         return make_response({"message": "successful deletion of user!"}, 204)
+    
+class CheckPassword(Resource):
+
+    def post(self):
+        data = request.get_json()
+        user_id = data.get('user_id')
+        password = data.get('password')
+
+        user = User.query.filter(
+            User.id == user_id
+        ).first()
+
+        if user.authenticate(password):
+            return make_response(user.to_dict(), 200)
+        return {'error': 'Incorrect Passowrd. Try again.'}, 401
+
+
 
 class Login(Resource):
 
@@ -173,6 +198,7 @@ class Trip_by_ID(Resource):
 
 api.add_resource(Users, '/users')
 api.add_resource(Users_by_ID, '/users/<int:id>')
+api.add_resource(CheckPassword, '/checkpassword')
 api.add_resource(Login, '/logins')
 api.add_resource(CheckSession, '/checksession')
 api.add_resource(Logout, '/logout')

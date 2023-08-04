@@ -98,9 +98,11 @@ function AddTripMap() {
         <div className="continer">
             <div className="controls">
                 <NavBar />
-                <h1>Add a trip</h1>
                 {revealControls 
-                ?<Controls 
+                ?
+                <div>
+                    <h1>Add a trip</h1>
+                    <Controls 
                     start = {start}
                     onSetStart = {setStart}
                     onSetStartId = {setStartId}
@@ -114,6 +116,7 @@ function AddTripMap() {
                     route={route}
                     onSetRoute={setRoute}
                     onReset={handleReset}/>
+                </div>
                 : <div>
                     <h1 className="addedTripAlert">🥳🎉🎊<br/>Trip has been added!!<br/>🥳🎉🎊</h1>
                     <button onClick={() => setRevealControls(true)}>Add another trip?</button>

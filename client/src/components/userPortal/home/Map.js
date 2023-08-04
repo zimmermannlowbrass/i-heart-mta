@@ -6,14 +6,18 @@ import {
 } from "@react-google-maps/api"
 import NavBar from "../NavBar";
 import "../../../stylesheets/home.css"
+import CannotEdit from './profile/CannotEdit.js'
 
 import { UserContext } from "../../../context/user";
+import CanEditProfile from "./profile/CanEdit";
 
 function Map() {
 
-    const {user, setUser} = useContext(UserContext)
+    const {user} = useContext(UserContext)
     const [trips, setTrips] = useState([])
     const [revealTrips, setRevealTrips] = useState(false)
+    const [canEditProfile, setCanEditProfile] = useState(false)
+    const [showPasword, setShowPassword] = useState(false)
     useEffect(() => {
         fetch("/trips")
         .then(r => r.json())
@@ -34,25 +38,55 @@ function Map() {
         mapRef.current = map
     }, [])
 
-    function handleSignOut() {
-        fetch('/logout', {
-            method: 'DELETE'
+    function handleUnlock(e) {
+        e.preventDefault()
+        const password = e.target[0].value
+        fetch('/checkpassword', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                user_id: user.id,
+                password: password
+            })
         })
-        .then(setUser(null))
+        .then((r) => {
+            if (r.ok) {
+                setCanEditProfile(true)
+            } else {
+                r.json().then(err => alert(err['error']))
+            }
+        })
     }
+
 
     return(
         <div className="continer">
             <div className="controls">
                 <NavBar />
                 <div className="profile-home">
-                    <button className="show-trips" onClick={() => setRevealTrips(!revealTrips)}>{revealTrips ? 'Hide' : 'Show'}<br/>Past Trips</button>
-                    <h1>Profile</h1>
-                    <h3>Name:<br />{user.name}</h3>
-                    <h3>Occupation:<br/>{user.role ? user.role : 'n/a'}</h3>
-                    <h3>Borough:<br/>{user.borough}</h3>
-                    <h3>Trips Taken:<br/>{userTrips.length}</h3>
-                    <button onClick={() => handleSignOut()}>Sign Out</button>
+                    {canEditProfile 
+                    ?
+                    <div> 
+                        <button onClick={() => setCanEditProfile(false)}>Go Back</button>
+                        <CanEditProfile setCanEditProfile={setCanEditProfile}/> 
+                    </div>
+                    : 
+                    <div>
+                        <button className="show-trips" onClick={() => setRevealTrips(!revealTrips)}>{revealTrips ? 'Hide' : 'Show'}<br/>Past Trips</button>
+                        <CannotEdit userTrips={userTrips}/>
+                        <br />
+                        <form onSubmit={handleUnlock}>
+                            Password
+                            <input type={showPasword ? null : "password"}></input>
+                            <button type="button" onClick={() =>setShowPassword(!showPasword)}>
+                                {showPasword ? "Hide Password" : "Show Password"}
+                            </button>
+                            <button>Unlock Profile</button>
+                        </form>
+                    </div>
+                }
                 </div>
             </div>
             <div className="map" id="map">
