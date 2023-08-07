@@ -5,7 +5,8 @@
 *React-Redux frontend*
 *FLask-SQLAlchemy backend*
 
-![Alt text](Zimmermann.Capstone.drawio.png)
+## draw.io
+![Tables](Zimmermann.drawio.png)
 
 ### External API's and other data used
 For this project, I used Google Maps API key as well as MTA's API key. Google maps provided the map which acts as a canvas for the subway trip drawings. As well, Google provided the necessary direction rendering for the subway trip. This direction rendering  provided a list of latitude/longitude direction coordinates that was used to draw polylines with colors cooresponding to the train color. The MTA provided necessary subwaystop information, including information on over 700 subwaystops (names, lat/lng directions, descriptions, transfer routes). Unfortunately, the MTA did not provide a ordered list of subway stops for each subway route. To get this last piece of information, I had to scrape the MTA's website and use beautiful soup to compile a ordered list from uptown to downtown of every subwaystop station.
@@ -20,9 +21,13 @@ Users will be able to sign up for a profile by creating a few credentials, such 
 
 Upon entering the application, the User will see their profile information. The User can edit certain personal information such as name or occupation once they reenter their password. User can press "Show pass trips" to watch the map populate polylines of subway trips taken (corresponding train colors provided).
 
+![demo](https://media.giphy.com/media/9fM0zK1ftG3VmNpyDQ/giphy.gif)
+
     -Add a trip-
 
 In the "add a trip" section, a user will be able to add a subway trip experience to their profile. User will first have their map display the borough of their residency. They will be asked which borough this trips starts in. Then they will be asked which station they are beginning their trip at. Upon selection, the map will rereference itself to the location of the station. The user will then be asked which train they intend to take and which direction they are heading toward. Lastly, the user will be given a list of end station options. Upon picking an end station, the map will rereference itself to display the end station. Lastly, the user will select to add the trip to their profile. A polyline will populate displaying the subway path and the trip will be added to the user's profile.
+
+![demo](https://media.giphy.com/media/luwHHLQHqxDK77er9D/giphy.gif)
 
     -Dashboard/All Trips and Favorites-
 
@@ -35,16 +40,3 @@ In the statistics section of the user's dashboard, a user can see provided stati
     -Dashboard/All Subway Stops-
 
 In this section, a user can see all the subway routes and all of their station stops in order. This section is similar to the one on the sign in page and can be used as a reference guide for users.
-
-
-
-
-
-
-
---- TODO --- 
-Front End:
-In Past Trips in dashboard, offer a filter option
-
-Back End:
-Check and make sure that there are not other usernames with same username
