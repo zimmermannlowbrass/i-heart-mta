@@ -129,6 +129,9 @@ function SignUp() {
           onChange={formik.handleChange}
           value={formik.values.role}
           />
+          <br />
+          <br />
+          
           <label htmlFor="password">Password</label>
           <br />
           <input

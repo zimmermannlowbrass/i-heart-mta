@@ -12,17 +12,18 @@ def scraper(subway):
 
     doc = BeautifulSoup(html.text, 'html.parser')
 
-    courses = doc.select('.col_0')[1:]
+    stations = doc.select('.col_0')[1:]
 
     route = []
-    for course in courses:
-        content = str(course.contents[0])
+    for station in stations:
+        content = str(station.contents[0])
         content = content[3: -4]
         if 'Subway' not in content:
             content = fix_spelling_errors_from_scrape(content)
             route.append(content)
-        # content = content[3: -4]
     return route
+
+
 
 scrape = scraper('S')
 

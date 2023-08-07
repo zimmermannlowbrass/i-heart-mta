@@ -92,7 +92,7 @@ class Station(db.Model, SerializerMixin):
 class SubwayStop(db.Model, SerializerMixin):
     __tablename__ = 'subwaystops'
 
-    serialize_rules = ('-station.subwaystops', '-stop', '-start',)
+    serialize_rules = ('-station.subwaystops', '-stop', '-start', '-trips.start', '-trips.stop')
 
     id = db.Column(db.Integer, primary_key=True)
     route = db.Column(db.String)
@@ -103,7 +103,7 @@ class SubwayStop(db.Model, SerializerMixin):
     station_id = db.Column(db.Integer, db.ForeignKey('stations.id'))
     station = db.relationship('Station', back_populates='subwaystops')
 
-    # trips = db.relationship('Trip', primaryjoin="SubwayStop.id==Trip.subwaystops_id")
+    trips = db.relationship('Trip', primaryjoin="SubwayStop.id==Trip.start_id")
 
     def __repr__(self):
         return f'<SubwayStop>{self.position} along the {self.route}'

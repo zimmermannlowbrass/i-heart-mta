@@ -5,6 +5,8 @@
 *React-Redux frontend*
 *FLask-SQLAlchemy backend*
 
+![Alt text](Zimmermann.Capstone.drawio.png)
+
 ### External API's and other data used
 For this project, I used Google Maps API key as well as MTA's API key. Google maps provided the map which acts as a canvas for the subway trip drawings. As well, Google provided the necessary direction rendering for the subway trip. This direction rendering  provided a list of latitude/longitude direction coordinates that was used to draw polylines with colors cooresponding to the train color. The MTA provided necessary subwaystop information, including information on over 700 subwaystops (names, lat/lng directions, descriptions, transfer routes). Unfortunately, the MTA did not provide a ordered list of subway stops for each subway route. To get this last piece of information, I had to scrape the MTA's website and use beautiful soup to compile a ordered list from uptown to downtown of every subwaystop station.
 
