@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Shadows+Into+Light&family=Silkscreen&display=swap');
+
 html,
 body {
   text-align: center;
@@ -5,8 +7,7 @@ body {
   height: 100%;
   margin: 0;
   background-image: url("https://images.squarespace-cdn.com/content/v1/5b1d2b1d89c172a5020826d6/1537871569487-EDT1VP9FPXIAHQDI0H5N/site_background.png?format=2500w");
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Silkscreen', cursive;
     color: hotpink;
     background-color: #14161a;
 }
