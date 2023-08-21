@@ -103,6 +103,8 @@ header {
   border-radius: 30px; 
 }
 
+.pastTripContainer:hover {transform: scale(1.1); }
+
 button {
   background-color: hotpink;
   color: black;
